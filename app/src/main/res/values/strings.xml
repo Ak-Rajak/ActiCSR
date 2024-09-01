@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ActiCSRApplication</string>
+    <string name="app_name">ActiCSR</string>
+    <string name="text1">Fill your information below or\nregister with your social account</string>
+    <string name="text2">We missed you! Login to continue\nyour journey with us.</string>
 </resources>
