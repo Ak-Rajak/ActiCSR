@@ -1,16 +1,20 @@
 package com.example.acticsrapplication
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 
 class SignUp : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
-
     private lateinit var nameEditText: TextInputEditText
     private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
@@ -18,26 +22,39 @@ class SignUp : AppCompatActivity() {
     private lateinit var signUpButton: MaterialButton
     private lateinit var goToLoginTextView: TextView
 
-
     private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
-        if (TextUtils.isEmpty(name)){
+        var isValid = true
+
+        if (TextUtils.isEmpty(name)) {
             nameEditText.error = "Name is required"
+            isValid = false
         }
 
-        if (TextUtils.isEmpty(email)){
-            nameEditText.error = "Email is required"
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.error = "Email is required"
+            isValid = false
         }
 
         if (TextUtils.isEmpty(password)) {
-            nameEditText.error = "Password is required"
+            passwordEditText.error = "Password is required"
+            isValid = false
+        } else if (password.length < 6) {
+            passwordEditText.error = "Password must be at least 6 characters long"
+            isValid = false
         }
 
-        if (TextUtils.isEmpty(confirmPassword)){
-            nameEditText.error = "Password must be at least 6 character long"
-            return false
+        if (TextUtils.isEmpty(confirmPassword)) {
+            confirmPasswordEditText.error = "Confirm Password is required"
+            isValid = false
+        } else if (password != confirmPassword) {
+            confirmPasswordEditText.error = "Passwords do not match"
+            isValid = false
         }
+
+        return isValid
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,22 +65,28 @@ class SignUp : AppCompatActivity() {
             insets
         }
 
-        nameEditText = findViewById<>(R.id.nameEditText)
-        emailEditText = findViewById<>(R.id.emailEditText)
-        passwordEditText = findViewById<>(R.id.passwordEditText)
-        confirmPasswordEditText = findViewById<>(R.id.confirmPasswordEditText)
-        signUpButton = findViewById<>(R.id.signUpButton)
-        goToLoginTextView = findViewById<>(R.id.go_login_screen)
+        nameEditText = findViewById(R.id.nameInput)
+        emailEditText = findViewById(R.id.emailInput)
+        passwordEditText = findViewById(R.id.passwordInput)
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordInput)
+        signUpButton = findViewById(R.id.signUpButton)
+        goToLoginTextView = findViewById(R.id.go_login_screen)
 
-        signUpButton.setOnClickLister {
+        signUpButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
-            val email = nameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
             val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
-            if (validateInput(name, email , password , confirmPassword)) {
-                signup(name,email,password)
+            if (validateInput(name, email, password, confirmPassword)) {
+                signup(name, email, password)
             }
         }
+    }
+
+    private fun signup(name: String, email: String, password: String) {
+        // Example of a simple registration logic
+        Toast.makeText(this, "Registration successful for $name", Toast.LENGTH_SHORT).show()
+        // Navigate to another activity if needed
     }
 }

@@ -11,7 +11,10 @@
 
     <Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="-25dp"
+        android:layout_marginLeft="-15dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -56,13 +59,14 @@
         app:boxCornerRadiusBottomEnd="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:textColorHint="@color/dark_grey"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:drawableStart="@drawable/user_18"
             android:drawableTint="@color/dark_grey"
             android:drawablePadding="10dp"/>
@@ -79,6 +83,7 @@
         app:boxCornerRadiusBottomEnd="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
@@ -103,6 +108,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -128,6 +134,7 @@
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirm Password"
@@ -141,6 +148,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign up"
@@ -202,7 +210,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/go_login_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -210,6 +217,7 @@
         android:gravity="center">
 
         <TextView
+            android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -217,6 +225,7 @@
             android:text="Already have an account?"/>
 
         <TextView
+            android:id="@+id/go_login_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
