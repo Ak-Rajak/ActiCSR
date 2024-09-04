@@ -2,6 +2,7 @@ package com.example.acticsrapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,38 @@ class SignUp : AppCompatActivity() {
     private lateinit var confirmPasswordEditText: TextInputEditText
     private lateinit var signUpButton: MaterialButton
     private lateinit var goToLoginTextView: TextView
+
+    private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
+        var isValid = true
+
+        if (TextUtils.isEmpty(name)) {
+            nameEditText.error = "Name is required"
+            isValid = false
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.error = "Email is required"
+            isValid = false
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            passwordEditText.error = "Password is required"
+            isValid = false
+        } else if (password.length < 6) {
+            passwordEditText.error = "Password must be at least 6 characters long"
+            isValid = false
+        }
+
+        if (TextUtils.isEmpty(confirmPassword)) {
+            confirmPasswordEditText.error = "Confirm Password is required"
+            isValid = false
+        } else if (password != confirmPassword) {
+            confirmPasswordEditText.error = "Passwords do not match"
+            isValid = false
+        }
+
+        return isValid
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +76,6 @@ class SignUp : AppCompatActivity() {
                 signup(name, email, password)
             }
         }
-    }
-
-    private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
-        // Validation logic here
-        return true
     }
 
     private fun signup(name: String, email: String, password: String) {
