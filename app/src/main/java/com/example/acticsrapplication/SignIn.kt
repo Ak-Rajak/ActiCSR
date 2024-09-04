@@ -1,20 +1,17 @@
 package com.example.acticsrapplication
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 class SignIn : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var signInButton: MaterialButton
@@ -39,13 +36,7 @@ class SignIn : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_sign_in)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.go_register_screen)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         emailEditText = findViewById(R.id.emailInput)
         passwordEditText = findViewById(R.id.passwordInput)
@@ -69,9 +60,20 @@ class SignIn : AppCompatActivity() {
     }
 
     private fun signin(email: String, password: String) {
-        // Example of a simple sign-in logic
-        Toast.makeText(this, "Sign in successful for $email", Toast.LENGTH_SHORT).show()
-        // Navigate to another activity if needed
-    }
+        // Retrieve user details from SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val storedEmail = sharedPreferences.getString("Email", null)
+        val storedPassword = sharedPreferences.getString("Password", null)
 
+        // Validate the credentials
+        if (email == storedEmail && password == storedPassword) {
+            Toast.makeText(this, "Sign in successful for $email", Toast.LENGTH_SHORT).show()
+            // Navigate to another activity if needed
+            // Example: val intent = Intent(this, HomeActivity::class.java)
+            // startActivity(intent)
+            // finish()
+        } else {
+            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

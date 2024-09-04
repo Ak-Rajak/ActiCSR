@@ -1,5 +1,6 @@
 package com.example.acticsrapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -79,7 +80,20 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun signup(name: String, email: String, password: String) {
+        // Save user details in SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putString("Name", name)
+        editor.putString("Email", email)
+        editor.putString("Password", password)
+        editor.apply()
+
         Toast.makeText(this, "Registration successful for $name", Toast.LENGTH_SHORT).show()
-        // Signup logic here
+
+        // Optionally, navigate to SignIn activity after successful registration
+        val intent = Intent(this, SignIn::class.java)
+        startActivity(intent)
+        finish()
     }
 }
