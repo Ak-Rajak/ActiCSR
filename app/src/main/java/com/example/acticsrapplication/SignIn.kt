@@ -1,7 +1,5 @@
 package com.example.acticsrapplication
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,12 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 
 class SignIn : AppCompatActivity() {
     private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var signInButton: MaterialButton
     private lateinit var goToSignUpTextView: TextView
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private fun validateInput(email: String, password: String): Boolean {
         var isValid = true
@@ -33,7 +33,6 @@ class SignIn : AppCompatActivity() {
         return isValid
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -42,6 +41,9 @@ class SignIn : AppCompatActivity() {
         passwordEditText = findViewById(R.id.passwordInput)
         signInButton = findViewById(R.id.signInButton)
         goToSignUpTextView = findViewById(R.id.go_register_screen)
+
+        // Initialize Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance()
 
         signInButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -53,27 +55,23 @@ class SignIn : AppCompatActivity() {
         }
 
         goToSignUpTextView.setOnClickListener {
-            // Navigate to SignUp activity
-            val intent = Intent(this@SignIn, SignUp::class.java)
+            val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
         }
     }
 
     private fun signin(email: String, password: String) {
-        // Retrieve user details from SharedPreferences
-        val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val storedEmail = sharedPreferences.getString("Email", null)
-        val storedPassword = sharedPreferences.getString("Password", null)
-
-        // Validate the credentials
-        if (email == storedEmail && password == storedPassword) {
-            Toast.makeText(this, "Sign in successful for $email", Toast.LENGTH_SHORT).show()
-            // Navigate to another activity if needed
-            // Example: val intent = Intent(this, HomeActivity::class.java)
-            // startActivity(intent)
-            // finish()
-        } else {
-            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
-        }
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
+                    // Navigate to home or another activity if needed
+                    // Example: val intent = Intent(this, HomeActivity::class.java)
+                    // startActivity(intent)
+                    // finish()
+                } else {
+                    Toast.makeText(this, "Sign in failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070827750554",
+    "project_id": "acticsrappl",
+    "storage_bucket": "acticsrappl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070827750554:android:90b74de4d40713758a8b23",
+        "android_client_info": {
+          "package_name": "com.example.acticsrapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKt8sIaPeHOkDuILksKjyvmu_Yq8JS1_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

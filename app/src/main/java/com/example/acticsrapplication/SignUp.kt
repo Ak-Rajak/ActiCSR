@@ -1,6 +1,5 @@
 package com.example.acticsrapplication
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 
 class SignUp : AppCompatActivity() {
     private lateinit var nameEditText: TextInputEditText
@@ -17,6 +17,7 @@ class SignUp : AppCompatActivity() {
     private lateinit var confirmPasswordEditText: TextInputEditText
     private lateinit var signUpButton: MaterialButton
     private lateinit var goToLoginTextView: TextView
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private fun validateInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
         var isValid = true
@@ -61,7 +62,9 @@ class SignUp : AppCompatActivity() {
         signUpButton = findViewById(R.id.signUpButton)
         goToLoginTextView = findViewById(R.id.go_login_screen)
 
-        // Handle "Login" click to redirect to SignIn activity
+        // Initialize Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance()
+
         goToLoginTextView.setOnClickListener {
             val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
@@ -74,26 +77,23 @@ class SignUp : AppCompatActivity() {
             val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
             if (validateInput(name, email, password, confirmPassword)) {
-                signup(name, email, password)
+                signup(email, password)
             }
         }
     }
 
-    private fun signup(name: String, email: String, password: String) {
-        // Save user details in SharedPreferences
-        val sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putString("Name", name)
-        editor.putString("Email", email)
-        editor.putString("Password", password)
-        editor.apply()
-
-        Toast.makeText(this, "Registration successful for $name", Toast.LENGTH_SHORT).show()
-
-        // Optionally, navigate to SignIn activity after successful registration
-        val intent = Intent(this, SignIn::class.java)
-        startActivity(intent)
-        finish()
+    private fun signup(email: String, password: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                    // Optionally navigate to SignIn or another activity
+                    val intent = Intent(this, SignIn::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 }
