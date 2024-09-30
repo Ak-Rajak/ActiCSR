@@ -1,16 +1,22 @@
 package com.example.acticsrapplication // Replace with your app's package name
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+// Data class for Events
 data class Event(val title: String, val location: String, val date: String, val time: String)
 
+// RecyclerView Adapter for Events
 class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,17 +45,48 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
     override fun getItemCount(): Int = events.size
 }
 
+// MainActivity
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var campusSpinner: Spinner
+    private lateinit var selectedCampus: TextView
     private lateinit var recyclerViewUpcoming: RecyclerView
     private lateinit var recyclerViewInterested: RecyclerView
     private lateinit var eventsAdapterUpcoming: EventsAdapter
     private lateinit var eventsAdapterInterested: EventsAdapter
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // Your activity layout
 
+        // Setup Spinner for Campus Selection
+        campusSpinner = findViewById(R.id.campus_spinner)
+        selectedCampus = findViewById(R.id.selected_campus)
+
+        // Setup Spinner Adapter with the campus list
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.campus_list,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            campusSpinner.adapter = adapter
+        }
+
+        // Handle Spinner Selection
+        campusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedItemView = view as TextView
+                selectedItemView.setTextColor(resources.getColor(R.color.midnight_blue))
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing
+            }
+        }
+
+        // Setup RecyclerViews for Upcoming and Interested Events
         recyclerViewUpcoming = findViewById(R.id.upcoming_events_recycler)
         recyclerViewInterested = findViewById(R.id.interested_events_recycler)
 
@@ -66,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             Event("Startup Workshop", "Room 201", "May 15, 2025", "09:00 AM")
         )
 
-        // Set up the adapters and layout managers
+        // Set up the adapters and layout managers for RecyclerViews
         eventsAdapterUpcoming = EventsAdapter(upcomingEvents)
         eventsAdapterInterested = EventsAdapter(interestedEvents)
 

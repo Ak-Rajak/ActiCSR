@@ -4,10 +4,12 @@
     <string name="text2">We missed you! Login to continue\nyour journey with us.</string>
         <string-array name="campus_list">
             <item>Bhubaneswar</item>
-            <item>Delhi</item>
-            <item>Mumbai</item>
-            <item>Bangalore</item>
-            <item>Kolkata</item>
+            <item>paralakhemundi</item>
+            <item>A.P</item>
+            <item>Rayagarh</item>
+            <item>Baleswar</item>
+            <item>Balangir</item>
+            <item>Chatrapur</item>
         </string-array>
     <string name="category_scroll_view_description">Scroll through the categories</string>
     <string name="category1_description">Description for Category 1</string>
