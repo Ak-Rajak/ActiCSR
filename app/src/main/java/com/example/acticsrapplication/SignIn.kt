@@ -65,10 +65,11 @@ class SignIn : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
-                    // Navigate to home or another activity if needed
-                    // Example: val intent = Intent(this, HomeActivity::class.java)
-                    // startActivity(intent)
-                    // finish()
+
+                    // Navigate to MainActivity after successful sign-in
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish() // Optional: Call finish() to remove SignIn from the back stack
                 } else {
                     Toast.makeText(this, "Sign in failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }

@@ -50,7 +50,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.airbnb.android:lottie:6.5.2")
 
 }

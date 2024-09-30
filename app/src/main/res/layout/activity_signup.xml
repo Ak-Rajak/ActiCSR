@@ -9,20 +9,22 @@
     android:background="@color/white"
     tools:context=".SignUp">
 
-    <Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="-25dp"
-        android:layout_marginLeft="-15dp">
+        android:layout_marginLeft="-15dp"
+        tools:ignore="RtlHardcoded">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_24"
             app:tint="@color/dark_blue" />
-    </Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
+
 
 
     <LinearLayout
@@ -57,7 +59,8 @@
         app:boxCornerRadiusTopStart="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusBottomEnd="10dp">
+        app:boxCornerRadiusBottomEnd="10dp"
+        tools:ignore="MissingClass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInput"
@@ -70,7 +73,8 @@
             android:inputType="text"
             android:drawableStart="@drawable/baseline_person_24"
             android:drawableTint="@color/dark_grey"
-            android:drawablePadding="10dp"/>
+            android:drawablePadding="10dp"
+            tools:ignore="MissingClass" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +85,8 @@
         app:boxCornerRadiusTopStart="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusBottomEnd="10dp">
+        app:boxCornerRadiusBottomEnd="10dp"
+        tools:ignore="MissingClass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInput"
@@ -106,7 +111,8 @@
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusBottomEnd="10dp"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        tools:ignore="MissingClass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
@@ -132,7 +138,8 @@
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusBottomEnd="10dp"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        tools:ignore="MissingClass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confirmPasswordInput"
@@ -145,7 +152,8 @@
             android:inputType="textPassword"
             android:drawableStart="@drawable/baseline_key_24"
             android:drawableTint="@color/dark_grey"
-            android:drawablePadding="10dp"/>
+            android:drawablePadding="10dp"
+            tools:ignore="MissingClass" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -160,7 +168,8 @@
         android:gravity="center"
         android:layout_margin="20dp"
         android:backgroundTint="@color/blue"
-        android:paddingVertical="10dp"/>
+        android:paddingVertical="10dp"
+        tools:ignore="MissingClass" />
 
     <LinearLayout
         android:layout_width="match_parent"

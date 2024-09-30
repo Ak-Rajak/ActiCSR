@@ -2,4 +2,17 @@
     <string name="app_name">ActiCSR</string>
     <string name="text1">Fill your information below or\nregister with your social account</string>
     <string name="text2">We missed you! Login to continue\nyour journey with us.</string>
+        <string-array name="campus_list">
+            <item>Bhubaneswar</item>
+            <item>Delhi</item>
+            <item>Mumbai</item>
+            <item>Bangalore</item>
+            <item>Kolkata</item>
+        </string-array>
+    <string name="category_scroll_view_description">Scroll through the categories</string>
+    <string name="category1_description">Description for Category 1</string>
+    <string name="category2_description">Description for Category 2</string>
+    <string name="category3_description">Description for Category 3</string>
+    <string name="category4_description">Description for Category 4</string>
+    <string name="category5_description">Description for Category 5</string>
 </resources>
