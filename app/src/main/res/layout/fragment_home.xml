@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top Campus Selection -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+            <!-- TextView to Display Selected Campus -->
+            <TextView
+                android:id="@+id/selected_campus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Campus: "
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:paddingTop="8dp"/>
+            <!-- Spinner for Campus Selection -->
+            <Spinner
+                android:id="@+id/campus_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+        <!-- Explore Categories Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore Categories"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- Horizontal Scroll for Categories -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:contentDescription="@string/category_scroll_view_description"> <!-- Add a description -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp">
+
+                    <!-- Category Images -->
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/category1"
+                        android:background="@drawable/circle_background"
+                        android:padding="8dp"
+                        android:contentDescription="@string/category1_description" /> <!-- Description for the first image -->
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/category2"
+                        android:background="@drawable/circle_background"
+                        android:padding="8dp"
+                        android:contentDescription="@string/category2_description" /> <!-- Description for the second image -->
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/category3"
+                        android:background="@drawable/circle_background"
+                        android:padding="8dp"
+                        android:contentDescription="@string/category3_description" /> <!-- Description for the third image -->
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/category4"
+                        android:background="@drawable/circle_background"
+                        android:padding="8dp"
+                        android:contentDescription="@string/category4_description" /> <!-- Description for the fourth image -->
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/category5"
+                        android:background="@drawable/circle_background"
+                        android:padding="8dp"
+                        android:contentDescription="@string/category5_description" /> <!-- Description for the fifth image -->
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+        </LinearLayout>
+
+        <!-- Upcoming Events Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upcoming Events"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- RecyclerView for Upcoming Events -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/upcoming_events_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+
+        <!-- Events You're Interested In Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Events You're Interested In"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- RecyclerView for Interested Events -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/interested_events_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

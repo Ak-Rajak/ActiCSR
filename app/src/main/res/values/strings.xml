@@ -2,6 +2,8 @@
     <string name="app_name">ActiCSR</string>
     <string name="text1">Fill your information below or\nregister with your social account</string>
     <string name="text2">We missed you! Login to continue\nyour journey with us.</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
         <string-array name="campus_list">
             <item>Bhubaneswar</item>
             <item>paralakhemundi</item>

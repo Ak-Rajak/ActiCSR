@@ -52,6 +52,7 @@
     <color name="violet">#EE82EE</color>
     <color name="dark_salmon">#E9967A</color>
     <color name="lavender">#E6E6FA</color>
+    <color name="lavender_dark">#480856</color>
     <color name="light_cyan">#E0FFFF</color>
     <color name="burlyWood">#DEB887</color>
     <color name="plum">#DDA0DD</color>
@@ -118,6 +119,8 @@
     <color name="steel_blue">#4682B4</color>
     <color name="royal_blue">#4169E1</color>
     <color name="turquoise">#40E0D0</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="medium_sea_green">#3CB371</color>
     <color name="lime_green">#32CD32</color>
     <color name="dark_slate_gray">#2F4F4F</color>
