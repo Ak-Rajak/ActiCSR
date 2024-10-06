@@ -10,11 +10,13 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:id="@+id/profile_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/aklogo" />
 
     <TextView
+        android:id="@+id/user_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Name"
@@ -22,6 +24,7 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/user_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="user_emailId@example.com"

@@ -1,4 +1,4 @@
-package com.example.acticsrapplication // Replace with your app's package name
+package com.example.acticsrapplication
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,38 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-// Data class for Events
-data class Event(val title: String, val location: String, val date: String, val time: String)
-
-// RecyclerView Adapter for Events
-class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
-
-    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val titleView: TextView = itemView.findViewById(R.id.event_title)
-        private val locationView: TextView = itemView.findViewById(R.id.event_location)
-        private val dateView: TextView = itemView.findViewById(R.id.event_date)
-        private val timeView: TextView = itemView.findViewById(R.id.event_time)
-
-        fun bind(event: Event) {
-            titleView.text = event.title
-            locationView.text = event.location
-            dateView.text = event.date
-            timeView.text = event.time
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false)
-        return EventViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(events[position])
-    }
-
-    override fun getItemCount(): Int = events.size
-}
 
 // HomeFragment
 class HomeFragment : Fragment() {
@@ -108,8 +76,11 @@ class HomeFragment : Fragment() {
         eventsAdapterUpcoming = EventsAdapter(upcomingEvents)
         eventsAdapterInterested = EventsAdapter(interestedEvents)
 
-        recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewInterested.layoutManager = LinearLayoutManager(requireContext())
+        // Horizontal scrolling for upcoming events
+        recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        // Vertical scrolling for interested events
+        recyclerViewInterested.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         recyclerViewUpcoming.adapter = eventsAdapterUpcoming
         recyclerViewInterested.adapter = eventsAdapterInterested
