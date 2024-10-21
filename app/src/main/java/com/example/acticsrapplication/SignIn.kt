@@ -37,13 +37,24 @@ class SignIn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        // Initialize Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        // Check if user is already signed in
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            // User is signed in, redirect to SplashActivity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Finish SignIn activity so it doesn't stay in the back stack
+            return
+        }
+
+        // If no user is signed in, proceed with setting up the sign-in screen
         emailEditText = findViewById(R.id.emailInput)
         passwordEditText = findViewById(R.id.passwordInput)
         signInButton = findViewById(R.id.signInButton)
         goToSignUpTextView = findViewById(R.id.go_register_screen)
-
-        // Initialize Firebase Auth
-        firebaseAuth = FirebaseAuth.getInstance()
 
         signInButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
