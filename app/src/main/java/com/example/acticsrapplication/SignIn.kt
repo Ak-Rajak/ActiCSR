@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -79,7 +80,7 @@ class SignIn : AppCompatActivity() {
             if (TextUtils.isEmpty(email)) {
                 emailEditText.error = "Please enter your email to reset the password"
             } else {
-                resetPassword(email)
+                showResetPasswordDialog(email)
             }
         }
     }
@@ -103,6 +104,18 @@ class SignIn : AppCompatActivity() {
                     Toast.makeText(this, "Sign in failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+
+    private fun showResetPasswordDialog(email: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Reset Password")
+            .setMessage("Are you sure you want to reset your password for $email?")
+            .setPositiveButton("Yes") { _, _ ->
+                resetPassword(email)
+            }
+            .setNegativeButton("No", null)
+            .create()
+            .show()
     }
 
     private fun resetPassword(email: String) {
