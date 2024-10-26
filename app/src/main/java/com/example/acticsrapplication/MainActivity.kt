@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -58,13 +59,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AboutFragment()).commit()
             }
             R.id.nav_logout -> {
-                logout()
+                showLogoutConfirmationDialog()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
+    private fun showLogoutConfirmationDialog() {
+        // Create an AlertDialog builder
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Logout")
+        builder.setMessage("Are you sure you want to logout?")
+
+        // Set up positive button to confirm logout
+        builder.setPositiveButton("Yes") { _, _ ->
+            logout() // Call the logout function if user confirms
+        }
+
+        // Set up negative button to cancel
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss() // Dismiss the dialog if user cancels
+        }
+
+        // Show the alert dialog
+        val dialog = builder.create()
+        dialog.show()
+    }
     // Implementing the logout function
     private fun logout() {
         // Sign out from Firebase
