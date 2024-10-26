@@ -11,10 +11,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class SignIn : AppCompatActivity() {
+
     private lateinit var emailEditText: TextInputEditText
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var signInButton: MaterialButton
     private lateinit var goToSignUpTextView: TextView
+    private lateinit var forgotPasswordTextView: TextView
     private lateinit var firebaseAuth: FirebaseAuth
 
     private fun validateInput(email: String, password: String): Boolean {
@@ -43,18 +45,19 @@ class SignIn : AppCompatActivity() {
         // Check if user is already signed in
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
-            // User is signed in, redirect to SplashActivity
+            // User is signed in, redirect to MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish() // Finish SignIn activity so it doesn't stay in the back stack
             return
         }
 
-        // If no user is signed in, proceed with setting up the sign-in screen
+        // Set up views
         emailEditText = findViewById(R.id.emailInput)
         passwordEditText = findViewById(R.id.passwordInput)
         signInButton = findViewById(R.id.signInButton)
         goToSignUpTextView = findViewById(R.id.go_register_screen)
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView)
 
         signInButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -69,20 +72,46 @@ class SignIn : AppCompatActivity() {
             val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
         }
+
+        // Set up forgot password functionality
+        forgotPasswordTextView.setOnClickListener {
+            val email = emailEditText.text.toString().trim()
+            if (TextUtils.isEmpty(email)) {
+                emailEditText.error = "Please enter your email to reset the password"
+            } else {
+                resetPassword(email)
+            }
+        }
     }
 
     private fun signin(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
+                    val user = firebaseAuth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
 
-                    // Navigate to MainActivity after successful sign-in
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish() // Optional: Call finish() to remove SignIn from the back stack
+                        // Navigate to MainActivity after successful sign-in
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish() // Optional: Call finish() to remove SignIn from the back stack
+                    } else {
+                        Toast.makeText(this, "Please verify your email first", Toast.LENGTH_LONG).show()
+                    }
                 } else {
                     Toast.makeText(this, "Sign in failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+
+    private fun resetPassword(email: String) {
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
     }
