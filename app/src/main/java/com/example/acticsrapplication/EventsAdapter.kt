@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 // Data class for Events
-data class Event(val title: String, val location: String, val date: String, val time: String)
+
 
 // RecyclerView Adapter for Events
 class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
