@@ -3,18 +3,18 @@ package com.example.acticsrapplication
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.acticsrapplication.databinding.ActivityEventsBinding
+import com.example.acticsrapplication.databinding.FragmentEventBinding
 import com.google.android.material.tabs.TabLayout
 
 class EventActivitys : AppCompatActivity() {
 
-    private lateinit var binding: ActivityEventsBinding
+    private lateinit var binding: FragmentEventBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Use view binding to inflate the layout
-        binding = ActivityEventsBinding.inflate(layoutInflater)
+        binding = FragmentEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Setup TabLayout with tabs
