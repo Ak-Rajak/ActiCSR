@@ -3,31 +3,17 @@ package com.example.acticsrapplication // Replace with your app's package name
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-// Data class for Events
-
-
 // RecyclerView Adapter for Events
-class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+class EventsAdapter(private val events: List<Events>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val titleView: TextView = itemView.findViewById(R.id.event_title)
-        private val locationView: TextView = itemView.findViewById(R.id.event_location)
-        private val dateView: TextView = itemView.findViewById(R.id.event_date)
-        private val timeView: TextView = itemView.findViewById(R.id.event_time)
-        private val imageView: ImageView = itemView.findViewById(R.id.event_image) // New ImageView
-
-        fun bind(event: Event) {
-            titleView.text = event.title
-            locationView.text = event.location
-            dateView.text = event.date
-            timeView.text = event.time
-            // Set a default image for now, this can be dynamically loaded
-            imageView.setImageResource(R.drawable.default_event_image) // Replace with actual image resource or logic
-        }
+        val title: TextView = itemView.findViewById(R.id.event_title)
+        val location: TextView = itemView.findViewById(R.id.event_location)
+        val date: TextView = itemView.findViewById(R.id.event_date)
+        val time: TextView = itemView.findViewById(R.id.event_time)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -36,8 +22,14 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(events[position])
+        val event = events[position]
+        holder.title.text = event.title
+        holder.location.text = event.location
+        holder.date.text = event.date
+        holder.time.text = event.time
     }
 
-    override fun getItemCount(): Int = events.size
+    override fun getItemCount(): Int {
+        return events.size
+    }
 }

@@ -9,11 +9,11 @@ class EventAdapter(private var events: MutableList<Event>) :
     RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: Event) {
-            binding.eventImage.setImageResource(event.imageRes)
-            binding.eventTitle.text = event.title
-            binding.eventLocation.text = event.location
-            binding.eventDate.text = event.date
+        fun bind(events: Event) {
+            binding.eventImage.setImageResource(events.imageRes)
+            binding.eventTitle.text = events.title
+            binding.eventLocation.text = events.location
+            binding.eventDate.text = events.date
         }
     }
 
@@ -23,8 +23,8 @@ class EventAdapter(private var events: MutableList<Event>) :
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position]
-        holder.bind(event)
+        val events = events[position]
+        holder.bind(events)
     }
 
     override fun getItemCount(): Int {

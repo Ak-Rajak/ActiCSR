@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment()).commit()
             }
             R.id.nav_share -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ShareFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, EventsFragment()).commit()
             }
             R.id.nav_about -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AboutFragment()).commit()
