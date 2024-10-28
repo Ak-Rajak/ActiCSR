@@ -5,15 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.ItemEventBinding
 
-class EventAdapter(private var events: MutableList<Event>) :
-    RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(
+    private var events: MutableList<Event>
+) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
+    // ViewHolder class to bind the data to the view
     inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(events: Event) {
-            binding.eventImage.setImageResource(events.imageRes)
-            binding.eventTitle.text = events.title
-            binding.eventLocation.text = events.location
-            binding.eventDate.text = events.date
+        fun bind(event: Event) {
+            binding.eventTitle.text = event.title
+            binding.eventLocation.text = event.location
+            binding.eventDate.text = event.date
+            binding.eventTime.text = event.time
+            binding.eventImage.setImageResource(event.imageRes)
         }
     }
 
@@ -23,18 +26,15 @@ class EventAdapter(private var events: MutableList<Event>) :
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val events = events[position]
-        holder.bind(events)
+        holder.bind(events[position])
     }
 
-    override fun getItemCount(): Int {
-        return events.size
-    }
+    override fun getItemCount(): Int = events.size
 
-    // Method to update events
+    // Update events method to switch between event types based on tabs
     fun updateEvents(newEvents: List<Event>) {
-        events.clear()  // Clear the old list
-        events.addAll(newEvents)  // Add the new events
-        notifyDataSetChanged()  // Notify the adapter to refresh the view
+        events.clear()
+        events.addAll(newEvents)
+        notifyDataSetChanged()
     }
 }
