@@ -11,6 +11,7 @@
             <item>Balangir</item>
             <item>Chatrapur</item>
         </string-array>
+    <string name="profile_photo_desc">Profile photo of the user</string>
     <string name="category_scroll_view_description">Scroll through the categories</string>
     <string name="category1_description">Description for Category 1</string>
     <string name="category2_description">Description for Category 2</string>

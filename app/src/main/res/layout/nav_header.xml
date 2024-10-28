@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
@@ -9,27 +10,30 @@
     android:background="@drawable/headerbkg"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/profile_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/aklogo" />
-
+    <!-- Wrap TextView in a larger clickable area -->
     <TextView
         android:id="@+id/user_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
         android:text="User Name"
         android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/user_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="5dp"
         android:text="user_emailId@example.com"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:layout_marginBottom="16dp"/>
-
+        tools:ignore="TouchTargetSizeCheck" />
 </LinearLayout>
