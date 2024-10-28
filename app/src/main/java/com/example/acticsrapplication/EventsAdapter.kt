@@ -1,4 +1,4 @@
-package com.example.acticsrapplication // Replace with your app's package name
+package com.example.acticsrapplication
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// This Adapter file is used in fragment_home.xml for showing events, Like Upcoming and Interested Events
 // RecyclerView Adapter for Events
 class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 

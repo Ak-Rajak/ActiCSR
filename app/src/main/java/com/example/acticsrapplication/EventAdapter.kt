@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.ItemEventBinding
 
+
+// This Adapter file is used in fragment_event.kt for showing events, like Completed, Upcoming and Canceled Events
+
 class EventAdapter(
     private var events: MutableList<Event>
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
