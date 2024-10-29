@@ -62,5 +62,6 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:23.1.0")
     implementation ("com.google.firebase:firebase-firestore:25.1.1")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation ("com.google.android.material:material:1.12.0")
 
 }
