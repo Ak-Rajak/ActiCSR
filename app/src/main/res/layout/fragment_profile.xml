@@ -6,6 +6,15 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Profile Picture Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile Picture"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
     <ImageView
         android:id="@+id/profile_photo"
         android:layout_width="100dp"
@@ -13,16 +22,42 @@
         android:layout_gravity="center"
         android:contentDescription="@string/profile_photo_desc"
         android:src="@drawable/aklogo"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_background"
+        android:padding="8dp" />
 
-    <TextView
-        android:id="@+id/user_Name"
+    <Button
+        android:id="@+id/change_profile_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="User Name"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="Change Photo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp" />
+
+    <!-- Basic Information Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Basic Information"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Full Name"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/student_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Student ID"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/user_Email"
@@ -30,6 +65,96 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="user_email@example.com"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
+    <TextView
+        android:id="@+id/user_Mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mobile Number"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_DOB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Date of Birth"
+        android:textSize="16sp"/>
+
+    <!-- Academic Information Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Academic Information"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/course_program"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Course/Program of Study"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/year_of_study"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Year of Study"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/major_minor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Major/Minor"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_AcademicYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Academic Year"
+        android:textSize="16sp"/>
+
+    <!-- Contact Information Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Information"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/alternate_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Alternate Email"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/social_media_links"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Social Media Links (LinkedIn, Facebook, etc.)"
+        android:textSize="16sp"/>
+
+    <!-- Update Profile Button -->
+    <Button
+        android:id="@+id/update_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Update Profile"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
