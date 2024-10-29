@@ -2,6 +2,7 @@ package com.example.acticsrapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,11 +14,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var firebaseAuth: FirebaseAuth
+    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +74,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val userNameTextView = headerView.findViewById<TextView>(R.id.user_Name)
             val userEmailTextView = headerView.findViewById<TextView>(R.id.user_Email)
 
-            // Set the username and email
-            userNameTextView.text = it.displayName ?: "User Name"
-            userEmailTextView.text = it.email ?: "user_email@example.com"
+            val userId = it.uid  // Get the authenticated user's UID
+
+            // Retrieve user data from Firestore
+            db.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        // Extract and set the username and email from Firestore
+                        val username = document.getString("username") ?: "User Name"
+                        val email = document.getString("email") ?: "user_email@example.com"
+
+                        // Update TextViews in NavigationView header
+                        userNameTextView.text = username
+                        userEmailTextView.text = email
+                    } else {
+                        Log.d("Firestore", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("Firestore", "Error fetching user data", exception)
+                }
         }
     }
 
     private fun navigateToProfileFragment() {
-        // Replace the current fragment with ShareFragment
+        // Replace the current fragment with ProfileFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, ProfileFragment())
             .commit()
