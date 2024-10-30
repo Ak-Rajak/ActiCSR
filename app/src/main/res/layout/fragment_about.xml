@@ -18,7 +18,7 @@
             android:id="@+id/logoImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/actiCSR"
+            android:src="@drawable/acticsr"
             android:layout_marginBottom="16dp"
             android:contentDescription="Logo" />
 
