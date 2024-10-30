@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +16,7 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:ignore="ExtraText">
 
+        <!-- Splash Activity (Launcher) -->
         <activity
             android:name=".activity_splash"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
@@ -22,23 +27,24 @@
             </intent-filter>
         </activity>
 
+        <!-- SignIn Activity -->
         <activity
             android:name=".SignIn"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
+        <!-- SignUp Activity -->
         <activity
             android:name=".SignUp"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
+        <!-- MainActivity (Home Screen with Navigation Drawer) -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.NavigationDrawer"
             android:exported="true" />
 
-        <activity android:name=".UpdateProfileFragment"
-            android:exported="false"/>
 
     </application>
 

@@ -13,9 +13,13 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Logger
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +30,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
+
+        // Set Firebase Database log level to DEBUG
+        FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG) // Correct log level setup
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
@@ -66,7 +76,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userNameTextView.setOnClickListener { navigateToProfileFragment() }
         userEmailTextView.setOnClickListener { navigateToProfileFragment() }
     }
-
     private fun loadUserData(navigationView: NavigationView) {
         val user = firebaseAuth.currentUser
         user?.let {
