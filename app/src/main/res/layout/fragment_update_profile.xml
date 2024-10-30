@@ -1,0 +1,112 @@
+<!-- activity_update_profile.xml -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Profile Picture Update Button -->
+        <Button
+            android:id="@+id/buttonChangeProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Profile Picture"/>
+
+        <!-- Full Name -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"/>
+
+        <!-- Student ID -->
+        <EditText
+            android:id="@+id/editTextStudentId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Student ID"
+            android:inputType="text"/>
+
+        <!-- Email Address -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"/>
+
+        <!-- Mobile Number -->
+        <EditText
+            android:id="@+id/editTextMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number"
+            android:inputType="phone"/>
+
+        <!-- Date of Birth -->
+        <EditText
+            android:id="@+id/editTextDOB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date of Birth"
+            android:inputType="date"/>
+
+        <!-- Course or Program of Study -->
+        <EditText
+            android:id="@+id/editTextCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course/Program of Study"/>
+
+        <!-- Year of Study -->
+        <EditText
+            android:id="@+id/editTextYearOfStudy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Year of Study (e.g., Freshman, Sophomore)"/>
+
+        <!-- Major/Minor -->
+        <EditText
+            android:id="@+id/editTextMajorMinor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Major/Minor"/>
+
+        <!-- Academic Year -->
+        <EditText
+            android:id="@+id/editTextAcademicYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Academic Year"/>
+
+        <!-- Alternate Email -->
+        <EditText
+            android:id="@+id/editTextAlternateEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alternate Email"
+            android:inputType="textEmailAddress"/>
+
+        <!-- Social Media Links -->
+        <EditText
+            android:id="@+id/editTextSocialMediaLinks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Social Media Links (e.g., LinkedIn, Facebook)"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

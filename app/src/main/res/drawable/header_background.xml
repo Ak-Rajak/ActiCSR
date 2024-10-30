@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background gradient layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:startColor="#3C4E5A"
+                android:endColor="#1E2D38"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Overlay circular shape for design effect -->
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="200dp"
+                android:height="200dp" />
+            <solid android:color="#334455" />
+        </shape>
+    </item>
+</layer-list>

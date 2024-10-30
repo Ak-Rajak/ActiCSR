@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.acticsrapplication.databinding.FragmentHomeBinding
 
-// HomeFragment
 class HomeFragment : Fragment() {
 
     private lateinit var campusSpinner: Spinner
@@ -22,16 +22,31 @@ class HomeFragment : Fragment() {
     private lateinit var eventsAdapterUpcoming: EventsAdapter
     private lateinit var eventsAdapterInterested: EventsAdapter
 
+    // Sample category data
+    private val categoryList = listOf(
+        Category(R.drawable.category1, "Category 1"),
+        Category(R.drawable.category2, "Category 2"),
+        Category(R.drawable.category3, "Category 3"),
+        Category(R.drawable.category4, "Category 4"),
+        Category(R.drawable.category5, "Category 5")
+    )
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // Setup RecyclerView for categories (horizontal scrolling)
+        binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList)
 
         // Setup Spinner for Campus Selection
-        campusSpinner = view.findViewById(R.id.campus_spinner)
-        selectedCampus = view.findViewById(R.id.selected_campus)
+        campusSpinner = binding.campusSpinner
+        selectedCampus = binding.selectedCampus
 
         // Setup Spinner Adapter with the campus list
         ArrayAdapter.createFromResource(
@@ -56,21 +71,22 @@ class HomeFragment : Fragment() {
         }
 
         // Setup RecyclerViews for Upcoming and Interested Events
-        recyclerViewUpcoming = view.findViewById(R.id.upcoming_events_recycler)
-        recyclerViewInterested = view.findViewById(R.id.interested_events_recycler)
+        recyclerViewUpcoming = binding.upcomingEventsRecycler
+        recyclerViewInterested = binding.interestedEventsRecycler
 
         // Sample data for Upcoming Events
         val upcomingEvents = listOf(
-            Event("Gajajoti 2025", "Studio 44", "March 1, 2025", "05:00 PM"),
-            Event("Tech Conference 2025", "Main Hall", "April 15, 2025", "10:00 AM"),
-            Event("Art Exhibition", "Gallery 3", "June 5, 2025", "02:00 PM")
+            Event("Gajajoti 2025", "Studio 44", "March 1, 2025", R.drawable.event_placeholder, "05:00 PM"),
+            Event("Tech Conference 2025", "Main Hall", "April 15, 2025", R.drawable.event_placeholder, "10:00 AM"),
+            Event("Art Exhibition", "Gallery 3", "June 5, 2025", R.drawable.event_placeholder, "02:00 PM")
         )
 
-        // Sample data for Interested Events
+// Sample data for Interested Events
         val interestedEvents = listOf(
-            Event("Music Fest", "Outdoor Stage", "May 10, 2025", "07:00 PM"),
-            Event("Startup Workshop", "Room 201", "May 15, 2025", "09:00 AM")
+            Event("Music Fest", "Outdoor Stage", "May 10, 2025", R.drawable.event_placeholder, "07:00 PM"),
+            Event("Startup Workshop", "Room 201", "May 15, 2025", R.drawable.event_placeholder, "09:00 AM")
         )
+
 
         // Set up the adapters and layout managers for RecyclerViews
         eventsAdapterUpcoming = EventsAdapter(upcomingEvents)
@@ -79,12 +95,18 @@ class HomeFragment : Fragment() {
         // Horizontal scrolling for upcoming events
         recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        // Vertical scrolling for interested events
+        // Horizontal scrolling for interested events
         recyclerViewInterested.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         recyclerViewUpcoming.adapter = eventsAdapterUpcoming
         recyclerViewInterested.adapter = eventsAdapterInterested
 
-        return view
+        // Return the root view now that all the setup is complete
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
