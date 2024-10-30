@@ -22,115 +22,80 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="Logo" />
 
-        <!-- Main heading, like 'Making the World Happening' -->
+        <!-- Main heading -->
         <TextView
             android:id="@+id/mainHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Making The World #Happening"
+            android:text="Welcome to actiCSR!"
             android:textSize="24sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Subheading or description -->
+        <!-- Mission Statement -->
         <TextView
-            android:id="@+id/subHeading"
-            android:layout_width="wrap_content"
+            android:id="@+id/missionStatement"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We reimagine how you discover events"
+            android:text="Our mission is to foster a collaborative environment where every student can actively contribute to CSR events."
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:gravity="center"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Paragraph content with a brief about the app -->
+        <!-- Key Features Heading -->
         <TextView
-            android:id="@+id/aboutDescription"
+            android:id="@+id/keyFeaturesHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Key Features of actiCSR:"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Key Features List -->
+        <TextView
+            android:id="@+id/keyFeaturesDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Events are our pulse, the rhythm that drives us. Founded in 2011, AllEvents is now one of the world’s largest Event Discovery Platforms. Our mission is to turn ordinary days into extraordinary memories. For you. For the memories you crave to create. For the communities you seek to engage."
+            android:text="- Event Management: Organize all college events with ease.\n- Participant Tracking: Keep detailed records of every student’s contributions.\n- Activity Records: View past event history and performance insights.\n- Real-time Notifications: Stay updated with event schedules and reminders.\n- Collaboration Tools: Ensure smooth communication and coordination between organizers."
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Event Ticketing Information -->
-        <LinearLayout
+        <!-- Call to Action -->
+        <TextView
+            android:id="@+id/getInvolvedHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Involved with actiCSR!"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/getInvolvedDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:elevation="4dp"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="24dp">
+            android:text="Ready to take part in college events and make a difference? Join actiCSR today and stay connected with every CSR initiative on campus!"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
 
-            <TextView
-                android:id="@+id/ticketingHeading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Event Ticketing"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/ticketingDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="We provide a simple yet comprehensive event listing and ticketing solution to event organizers! List your event, sell tickets, manage attendees and promote your event."
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
-
-            <!-- Publish Button -->
-            <Button
-                android:id="@+id/publishEventButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Publish Events"
-                android:textAllCaps="false"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="16dp" />
-        </LinearLayout>
-
-        <!-- Google Play and App Store Icons Section -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="447dp"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <!-- Google Play Icon -->
-            <ImageView
-                android:id="@+id/googlePlayIcon"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="Google Play Icon"
-                android:src="@drawable/google" />
-
-            <!-- App Store Icon -->
-            <ImageView
-                android:id="@+id/appStoreIcon"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="App Store Icon"
-                android:src="@drawable/aklogo" />
-        </LinearLayout>
-
-        <!-- Optional Instruction or Link -->
-        <TextView
-            android:id="@+id/installAppText"
+        <!-- Publish Button -->
+        <Button
+            android:id="@+id/publishEventButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Download Our App"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:text="Join actiCSR Now!"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 </ScrollView>
