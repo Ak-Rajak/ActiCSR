@@ -4,56 +4,96 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var auth: FirebaseAuth
+    private lateinit var currentUser: FirebaseUser
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        val view = inflater.inflate(R.layout.fragment_settings, container, false)
+
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+        currentUser = auth.currentUser ?: return view
+
+        // Set up click listeners for each option
+        view.findViewById<LinearLayout>(R.id.update_profile_option).setOnClickListener {
+            onUpdateProfileClick()
+        }
+
+        view.findViewById<LinearLayout>(R.id.change_password_option).setOnClickListener {
+            showChangePasswordConfirmationDialog()
+        }
+
+        // Removed delete profile option as per your request
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_settings.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun onUpdateProfileClick() {
+        val updateProfileFragment = UpdateProfileFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, updateProfileFragment) // Replace with your actual container ID
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun showChangePasswordConfirmationDialog() {
+        // Inflate the custom dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.custom_alert_dialog, null)
+
+        // Create the AlertDialog builder
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(dialogView) // Set the custom layout
+
+        // Find the buttons in the dialog view
+        val buttonYes = dialogView.findViewById<Button>(R.id.button_yes)
+        val buttonNo = dialogView.findViewById<Button>(R.id.button_no)
+
+        // Create the dialog instance
+        val dialog = builder.create()
+
+        // Set up the Yes button click listener
+        buttonYes.setOnClickListener {
+            onChangePasswordClick() // Call the original method to send the reset email
+            dialog.dismiss() // Dismiss the dialog after action
+        }
+
+        // Set up the No button click listener
+        buttonNo.setOnClickListener { dialog.dismiss() } // Dismiss the dialog
+
+        // Show the dialog
+        dialog.show()
+    }
+
+    private fun onChangePasswordClick() {
+        val email = currentUser.email
+        if (email != null) {
+            // Send password reset email
+            auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(requireContext(), "Password reset email sent.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+        } else {
+            Toast.makeText(requireContext(), "User email not found.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
