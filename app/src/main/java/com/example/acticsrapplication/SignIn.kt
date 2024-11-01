@@ -47,7 +47,7 @@ class SignIn : AppCompatActivity() {
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
             // User is signed in, redirect to MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, AdminMainActivity::class.java)
             startActivity(intent)
             finish() // Finish SignIn activity so it doesn't stay in the back stack
             return
@@ -94,7 +94,7 @@ class SignIn : AppCompatActivity() {
                         Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
 
                         // Navigate to MainActivity after successful sign-in
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, AdminMainActivity::class.java)
                         startActivity(intent)
                         finish() // Optional: Call finish() to remove SignIn from the back stack
                     } else {

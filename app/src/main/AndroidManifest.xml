@@ -45,6 +45,11 @@
             android:theme="@style/Theme.NavigationDrawer"
             android:exported="true" />
 
+        <activity
+            android:name=".AdminMainActivity"
+            android:theme="@style/Theme.NavigationDrawer"
+            android:exported="true" />
+
 
     </application>
 
