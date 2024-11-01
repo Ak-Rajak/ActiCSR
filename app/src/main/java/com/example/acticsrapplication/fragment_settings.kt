@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
 
     private fun showChangePasswordConfirmationDialog() {
         // Inflate the custom dialog layout
-        val dialogView = layoutInflater.inflate(R.layout.custom_alert_dialog, null)
+        val dialogView = layoutInflater.inflate(R.layout.password_alert_dialog, null)
 
         // Create the AlertDialog builder
         val builder = AlertDialog.Builder(requireContext())
