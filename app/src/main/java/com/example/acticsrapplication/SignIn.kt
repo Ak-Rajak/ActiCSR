@@ -93,12 +93,8 @@ class SignIn : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                     if (user != null && user.isEmailVerified) {
-//                        Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
-//
-//                        // Navigate to MainActivity after successful sign-in
-//                        val intent = Intent(this, AdminMainActivity::class.java)
-//                        startActivity(intent)
-//                        finish() // Optional: Call finish() to remove SignIn from the back stack
+
+
                         fetchUserRoleAndRedirect(user.uid)
                     } else {
                         Toast.makeText(this, "Please verify your email first", Toast.LENGTH_LONG).show()
