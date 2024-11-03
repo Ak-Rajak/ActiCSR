@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignIn : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class SignIn : AppCompatActivity() {
     private lateinit var goToSignUpTextView: TextView
     private lateinit var forgotPasswordTextView: TextView
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     private fun validateInput(email: String, password: String): Boolean {
         var isValid = true
@@ -42,14 +44,16 @@ class SignIn : AppCompatActivity() {
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         // Check if user is already signed in
         val currentUser = firebaseAuth.currentUser
-        if (currentUser != null) {
+        if (currentUser != null && currentUser.isEmailVerified) {
             // User is signed in, redirect to MainActivity
-            val intent = Intent(this, AdminMainActivity::class.java)
-            startActivity(intent)
-            finish() // Finish SignIn activity so it doesn't stay in the back stack
+//            val intent = Intent(this, AdminMainActivity::class.java)
+//            startActivity(intent)
+//            finish() // Finish SignIn activity so it doesn't stay in the back stack
+            fetchUserRoleAndRedirect(currentUser.uid)
             return
         }
 
@@ -91,12 +95,13 @@ class SignIn : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                     if (user != null && user.isEmailVerified) {
-                        Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
-
-                        // Navigate to MainActivity after successful sign-in
-                        val intent = Intent(this, AdminMainActivity::class.java)
-                        startActivity(intent)
-                        finish() // Optional: Call finish() to remove SignIn from the back stack
+//                        Toast.makeText(this, "Sign in successful", Toast.LENGTH_SHORT).show()
+//
+//                        // Navigate to MainActivity after successful sign-in
+//                        val intent = Intent(this, AdminMainActivity::class.java)
+//                        startActivity(intent)
+//                        finish() // Optional: Call finish() to remove SignIn from the back stack
+                        fetchUserRoleAndRedirect(user.uid)
                     } else {
                         Toast.makeText(this, "Please verify your email first", Toast.LENGTH_LONG).show()
                     }
