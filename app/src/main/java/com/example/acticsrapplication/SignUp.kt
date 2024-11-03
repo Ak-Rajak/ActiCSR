@@ -90,7 +90,6 @@ class SignUp : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 
-//
                     val userId = firebaseAuth.currentUser?.uid ?: return@addOnCompleteListener
 
                     val userData = hashMapOf(

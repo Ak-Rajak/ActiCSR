@@ -50,10 +50,7 @@ class SignIn : AppCompatActivity() {
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null && currentUser.isEmailVerified) {
 
-            // User is signed in, redirect to MainActivity
-//            val intent = Intent(this, AdminMainActivity::class.java)
-//            startActivity(intent)
-//            finish() // Finish SignIn activity so it doesn't stay in the back stack
+            //Direct to respective page
             fetchUserRoleAndRedirect(currentUser.uid)
             return
         }
