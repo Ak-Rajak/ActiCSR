@@ -45,14 +45,6 @@ class SignIn : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Check if user is already signed in
-        val currentUser = firebaseAuth.currentUser
-        if (currentUser != null && currentUser.isEmailVerified) {
-
-            //Direct to respective page
-            fetchUserRoleAndRedirect(currentUser.uid)
-            return
-        }
         setContentView(R.layout.activity_sign_in)
 
         // Set up views
