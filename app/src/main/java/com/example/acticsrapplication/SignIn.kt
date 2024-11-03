@@ -111,6 +111,31 @@ class SignIn : AppCompatActivity() {
             }
     }
 
+
+    private fun fetchUserRoleAndRedirect(userId: String) {
+        val userRef = firestore.collection("user").document(userId)
+        userRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val role = document.getString("role")
+                    if (role == "admin") {
+                        // Admin screen
+                        val intent = Intent(this,AdminMainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this,MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    finish()
+                } else {
+                    Toast.makeText(this,"User data not found",Toast.LENGTH_LONG).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this,"Failed to retrieve user data : ${e.message} ", Toast.LENGTH_LONG).show()
+            }
+    }
+
     private fun showResetPasswordDialog(email: String) {
         AlertDialog.Builder(this)
             .setTitle("Reset Password")
