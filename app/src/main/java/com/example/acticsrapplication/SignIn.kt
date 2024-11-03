@@ -40,7 +40,6 @@ class SignIn : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
@@ -54,6 +53,7 @@ class SignIn : AppCompatActivity() {
             fetchUserRoleAndRedirect(currentUser.uid)
             return
         }
+        setContentView(R.layout.activity_sign_in)
 
         // Set up views
         emailEditText = findViewById(R.id.emailInput)
@@ -93,8 +93,6 @@ class SignIn : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                     if (user != null && user.isEmailVerified) {
-
-
                         fetchUserRoleAndRedirect(user.uid)
                     } else {
                         Toast.makeText(this, "Please verify your email first", Toast.LENGTH_LONG).show()
@@ -116,6 +114,7 @@ class SignIn : AppCompatActivity() {
                         // Admin screen
                         val intent = Intent(this,AdminMainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     } else {
                         val intent = Intent(this,MainActivity::class.java)
                         startActivity(intent)
