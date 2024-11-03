@@ -89,11 +89,8 @@ class SignUp : AppCompatActivity() {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-//                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
-//                    // Optionally navigate to SignIn or another activity
-//                    val intent = Intent(this, SignIn::class.java)
-//                    startActivity(intent)
-//                    finish()
+
+//
                     val userId = firebaseAuth.currentUser?.uid ?: return@addOnCompleteListener
 
                     val userData = hashMapOf(

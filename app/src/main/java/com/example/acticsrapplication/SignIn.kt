@@ -49,6 +49,7 @@ class SignIn : AppCompatActivity() {
         // Check if user is already signed in
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null && currentUser.isEmailVerified) {
+
             // User is signed in, redirect to MainActivity
 //            val intent = Intent(this, AdminMainActivity::class.java)
 //            startActivity(intent)
