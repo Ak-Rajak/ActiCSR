@@ -1,6 +1,7 @@
 package com.example.acticsrapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.acticsrapplication.databinding.FragmentEventBinding
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class EventsFragment : Fragment() {
 
     private var _binding: FragmentEventBinding? = null
     private val binding get() = _binding!!
+    private lateinit var eventAdapter: EventAdapter
+    private val db = FirebaseFirestore.getInstance() // Initialize Firestore
+    private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) // Date format used in Firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment using view binding
+    ): View {
         _binding = FragmentEventBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -26,21 +33,34 @@ class EventsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup TabLayout with tabs
         setupTabs()
+        setupRecyclerView()
+        setupTabListener()
 
-        // Setup RecyclerView
-        val eventAdapter = EventAdapter(getUpcomingEvents().toMutableList()) // Use upcoming events by default
+        // Load completed events by default
+        loadEvents("completed")
+    }
+
+    private fun setupRecyclerView() {
+        eventAdapter = EventAdapter(mutableListOf()) // Start with an empty list
         binding.recyclerViewEvents.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewEvents.adapter = eventAdapter
+    }
 
-        // Setup TabLayout listener
+    private fun setupTabs() {
+        val tabTitles = listOf("Completed", "Upcoming", "Canceled")
+        tabTitles.forEach { title ->
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(title))
+        }
+    }
+
+    private fun setupTabListener() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> eventAdapter.updateEvents(getCompletedEvents())  // Completed Events
-                    1 -> eventAdapter.updateEvents(getUpcomingEvents())   // Upcoming Events
-                    2 -> eventAdapter.updateEvents(getCanceledEvents())   // Canceled Events
+                    0 -> loadEvents("completed")  // Fetch completed events
+                    1 -> loadEvents("upcoming")   // Fetch upcoming events
+                    2 -> loadEvents("canceled")   // Fetch canceled events
                 }
             }
 
@@ -49,52 +69,94 @@ class EventsFragment : Fragment() {
         })
     }
 
-    // Method to set up tabs
-    private fun setupTabs() {
-        binding.tabLayout.apply {
-            val completedTab = newTab().setText("Completed")
-            val upcomingTab = newTab().setText("Upcoming")
-            val canceledTab = newTab().setText("Canceled")
+    // Fetch events from Firestore based on their category (completed, upcoming, canceled)
+    private fun loadEvents(status: String) {
+        val currentDate = Date()
+        val formattedCurrentDate = dateFormat.format(currentDate)
 
-            addTab(completedTab)
-            addTab(upcomingTab)
-            addTab(canceledTab)
+        when (status) {
+            "completed" -> {
+                // Fetch events with dates in the past
+                db.collection("events")
+                    .whereGreaterThan("date", formattedCurrentDate)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val events = documents.map { document ->
+                            Event(
+                                title = document.getString("title") ?: "Unknown Title",
+                                location = document.getString("location") ?: "Unknown Location",
+                                date = document.getString("date") ?: "Unknown Date",
+                                imageRes = R.drawable.default_event_image, // Use default or update with URL if needed
+                                time = document.getString("time") ?: "Unknown Time"
+                            )
+                        }
+                        handleEventList(events)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("EventsFragment", "Error getting documents: ", exception)
+                    }
+            }
+            "upcoming" -> {
+                // Fetch events with dates in the future
+                db.collection("events")
+                    .whereLessThan("date", formattedCurrentDate)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val events = documents.map { document ->
+                            Event(
+                                title = document.getString("title") ?: "Unknown Title",
+                                location = document.getString("location") ?: "Unknown Location",
+                                date = document.getString("date") ?: "Unknown Date",
+                                imageRes = R.drawable.default_event_image,
+                                time = document.getString("time") ?: "Unknown Time"
+                            )
+                        }
+                        handleEventList(events)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("EventsFragment", "Error getting documents: ", exception)
+                    }
+            }
+            "canceled" -> {
+                // Fetch events explicitly marked as canceled
+                db.collection("events")
+                    .whereEqualTo("status", "canceled")
+                    .orderBy("date")
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        val events = documents.map { document ->
+                            Event(
+                                title = document.getString("title") ?: "Unknown Title",
+                                location = document.getString("location") ?: "Unknown Location",
+                                date = document.getString("date") ?: "Unknown Date",
+                                imageRes = R.drawable.default_event_image,
+                                time = document.getString("time") ?: "Unknown Time"
+                            )
+                        }
+                        handleEventList(events)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("EventsFragment", "Error getting documents: ", exception)
+                    }
+            }
         }
     }
 
-    private fun getCompletedEvents(): List<Event> {
-        return listOf(
-            Event("Code for Change", "Innovation Lab, Portland, OR", "September 15, 2024", R.drawable.event_placeholder, "10:00 AM"),
-            Event("Hackathon Heroes", "City Hall Community Room, Austin, TX", "March 23-24, 2024", R.drawable.event_placeholder, "09:00 AM"),
-            Event("Music Fest", "University Auditorium, Seattle, WA", "May 18, 2024", R.drawable.andimg4, "07:00 PM"),
-            Event("Tech Innovators", "Grand Hotel, Chicago, IL", "June 7-8, 2024", R.drawable.event_placeholder, "11:00 AM"),
-            Event("Summer Code Sprint", "Community Tech Hub, Boston, MA", "July 14, 2024", R.drawable.event_placeholder, "12:00 PM")
-        )
-    }
+    // Handle the event list and show/hide the "No events" message
+    private fun handleEventList(events: List<Event>) {
+        eventAdapter.updateEvents(events)
 
-    private fun getUpcomingEvents(): List<Event> {
-        return listOf(
-            Event("CodeFest", "Tech Convention Center, Hall No-6", "February 10, 2025", R.drawable.andimg6, "02:00 PM"),
-            Event("Hackathon'25", "Innovation Hub, Koutilya Building", "January 25, 2025", R.drawable.andimg7, "11:00 AM"),
-            Event("Neon Evening Party", "Downtown Club", "December 15, 2025", R.drawable.andimg1, "06:00 PM"),
-            Event("DebugFest", "Tech Arena, USA", "January 12, 2025", R.drawable.andimg8, "10:00 AM"),
-            Event("Summer Splash Bash", "The Grand Ballroom, R-10", "March 3, 2025", R.drawable.andimg5, "05:00 PM")
-        )
+        if (events.isEmpty()) {
+            binding.noEventsText.visibility = View.VISIBLE
+            binding.recyclerViewEvents.visibility = View.GONE
+        } else {
+            binding.noEventsText.visibility = View.GONE
+            binding.recyclerViewEvents.visibility = View.VISIBLE
+        }
     }
-
-    private fun getCanceledEvents(): List<Event> {
-        return listOf(
-            Event("Coldplay: Canceled", "Auditorium, Hall No-06", "Nov 20, 2023", R.drawable.banner, "08:00 PM"),
-            Event("Music Wave Festival", "City Park, Open Air", "Jan 10, 2024", R.drawable.andimg3, "05:00 PM"),
-            Event("Code Sprint 2024", "Digital Labs, AB Building", "December 5, 2024", R.drawable.andimg9, "09:00 AM"),
-            Event("ColdPlay, Music of the Spheres", "Garden Area, MD Building Front", "June 22, 2024", R.drawable.andimg2, "07:00 PM"),
-            Event("DevCon'2024", "Expo Center, Bhubaneswar", "April 15, 2025", R.drawable.andimg10, "10:00 AM")
-        )
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Clear the binding reference
+        _binding = null // Clear the binding reference to avoid memory leaks
     }
 }
