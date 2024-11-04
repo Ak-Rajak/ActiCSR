@@ -52,7 +52,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.admin_about_event -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AboutEventFragment()).commit()
+                    .replace(R.id.fragment_container, AddEventFragment()).commit()
             }
             R.id.admin_event_register -> {
                 supportFragmentManager.beginTransaction()
