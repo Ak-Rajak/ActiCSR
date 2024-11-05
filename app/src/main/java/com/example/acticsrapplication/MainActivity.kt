@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var bottomNavigationView: BottomNavigationView
     private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +58,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_nav_home -> loadFragment(HomeFragment())
+                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
+                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
+                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+            }
+            true // Returning true to indicate item selection was handled
+        }
+
+        bottomNavigationView.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_nav_home -> loadFragment(HomeFragment())
+                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
+                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
+                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+            }
+        }
+
 
         // Load the initial fragment
         if (savedInstanceState == null) {
