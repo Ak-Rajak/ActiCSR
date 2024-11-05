@@ -10,11 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var adminbottomNavigationView: BottomNavigationView
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,28 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        //bottom navigation
+        adminbottomNavigationView = findViewById(R.id.admin_bottom_navigation)
+        adminbottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_nav_home -> loadFragment(HomeFragment())
+                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
+                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
+                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+            }
+            true // Returning true to indicate item selection was handled
+        }
+
+        adminbottomNavigationView.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.bottom_nav_home -> loadFragment(HomeFragment())
+                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
+                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
+                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+            }
+        }
+
 
         // Set initial fragment when the activity is first created
         if (savedInstanceState == null) {
@@ -75,8 +100,15 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
     private fun showLogoutConfirmationDialog() {
         // Create an AlertDialog to confirm logout
+
         AlertDialog.Builder(this).apply {
             setTitle("Logout")
             setMessage("Are you sure you want to logout?")
@@ -85,6 +117,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             create().show()
         }
     }
+
 
     private fun logout() {
         // Sign out from Firebase
