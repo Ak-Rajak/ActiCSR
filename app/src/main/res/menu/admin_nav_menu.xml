@@ -13,9 +13,13 @@
             android:title="Home"/>
 
         <item
-            android:id="@+id/admin_about_event"
+            android:id="@+id/admin_add_event"
+            android:icon="@drawable/nav_add"
+            android:title="Add Event"/>
+        <item
+            android:id="@+id/admin_view_event"
             android:icon="@drawable/nav_events"
-            android:title="About Event"/>
+            android:title="View Event"/>
 
         <item
             android:id="@+id/admin_event_register"

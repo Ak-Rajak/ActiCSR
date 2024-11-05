@@ -50,9 +50,13 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, AdminHomeFragment()).commit()
             }
-            R.id.admin_about_event -> {
+            R.id.admin_add_event -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, AddEventFragment()).commit()
+            }
+            R.id.admin_view_event -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, EventsFragment()).commit()
             }
             R.id.admin_event_register -> {
                 supportFragmentManager.beginTransaction()
