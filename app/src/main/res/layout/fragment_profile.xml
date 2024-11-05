@@ -4,53 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp">
+    android:padding="0dp"
+    android:background="#FFE5C3">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="12dp"
-        android:background="#FFE5C3"
         android:layout_marginBottom="16dp">
 
-        <!-- Profile Picture Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Headline -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:paddingBottom="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile Picture"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"/>
-
-            <ImageView
-                android:id="@+id/profile_photo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                android:contentDescription="@string/profile_photo_desc"
-                android:src="@drawable/aklogo"
-                android:scaleType="centerCrop"
-                android:background="@drawable/circle_background"
-                android:padding="4dp"/>
-
-            <Button
-                android:id="@+id/change_profile_photo_button"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Change Photo"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/white"
-                android:background="@drawable/rounded_button"/>
-        </LinearLayout>
+            android:text="Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"/>
 
         <!-- Basic Information Section -->
         <com.google.android.material.card.MaterialCardView
@@ -71,147 +43,107 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basic Information"
+                    android:text="Your Basic Info"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="8dp"/>
 
+                <!-- Full Name -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full Name"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
                 <TextView
                     android:id="@+id/full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Full Name"
+                    android:text="John Doe"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="8dp"/>
 
+                <!-- Branch Name -->
                 <TextView
-                    android:id="@+id/student_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Student ID"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
-
+                    android:text="Branch Name"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
                 <TextView
-                    android:id="@+id/user_Email"
+                    android:id="@+id/branch_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="user_email@example.com"
+                    android:text="Computer Science"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="8dp"/>
 
+                <!-- Mobile Number -->
                 <TextView
-                    android:id="@+id/user_Mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mobile Number"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
+                <TextView
+                    android:id="@+id/user_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+123 456 7890"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/user_DOB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date of Birth"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Academic Information Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            android:padding="3dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Academic Information"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
+                <!-- Registration Number -->
                 <TextView
-                    android:id="@+id/course_program"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course/Program of Study"
+                    android:text="Registration Number"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
+                <TextView
+                    android:id="@+id/registration_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REG123456"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="8dp"/>
 
+                <!-- Year of Study -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year of Study"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
                 <TextView
                     android:id="@+id/year_of_study"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Year of Study"
+                    android:text="3rd Year"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/major_minor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Major/Minor"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/user_AcademicYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Academic Year"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Contact Information Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            android:padding="3dp"
-            app:cardBackgroundColor="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contact Information"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
+                <!-- Email -->
                 <TextView
-                    android:id="@+id/alternate_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alternate Email"
+                    android:text="Email"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="2dp"/>
+                <TextView
+                    android:id="@+id/user_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="johndoe@example.com"
                     android:textSize="16sp"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/social_media_links"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Social Media Links (LinkedIn, Facebook, etc.)"
-                    android:textSize="16sp"/>
+                    android:layout_marginBottom="8dp"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
