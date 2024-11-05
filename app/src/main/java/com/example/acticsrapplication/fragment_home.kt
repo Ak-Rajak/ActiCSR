@@ -76,15 +76,15 @@ class HomeFragment : Fragment() {
 
         // Sample data for Upcoming Events
         val upcomingEvents = listOf(
-            Event("Gajajoti 2025", "Studio 44", "March 1, 2025", R.drawable.event_placeholder, "05:00 PM"),
-            Event("Tech Conference 2025", "Main Hall", "April 15, 2025", R.drawable.event_placeholder, "10:00 AM"),
-            Event("Art Exhibition", "Gallery 3", "June 5, 2025", R.drawable.event_placeholder, "02:00 PM")
+            Event("Gajajoti 2025", "Studio 44", "March 1, 2025",  "05:00 PM"),
+            Event("Tech Conference 2025", "Main Hall", "April 15, 2025",  "10:00 AM"),
+            Event("Art Exhibition", "Gallery 3", "June 5, 2025",  "02:00 PM")
         )
 
 // Sample data for Interested Events
         val interestedEvents = listOf(
-            Event("Music Fest", "Outdoor Stage", "May 10, 2025", R.drawable.event_placeholder, "07:00 PM"),
-            Event("Startup Workshop", "Room 201", "May 15, 2025", R.drawable.event_placeholder, "09:00 AM")
+            Event("Music Fest", "Outdoor Stage", "May 10, 2025",  "07:00 PM"),
+            Event("Startup Workshop", "Room 201", "May 15, 2025",  "09:00 AM")
         )
 
 
