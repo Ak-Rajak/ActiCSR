@@ -48,7 +48,8 @@ class EventsFragment : Fragment() {
     }
 
     private fun setupTabs() {
-        val tabTitles = listOf("Completed", "Upcoming", "Canceled")
+        // Only two tabs: Completed and Upcoming
+        val tabTitles = listOf("Completed", "Upcoming")
         tabTitles.forEach { title ->
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(title))
         }
@@ -60,7 +61,6 @@ class EventsFragment : Fragment() {
                 when (tab?.position) {
                     0 -> loadEvents("completed")  // Fetch completed events
                     1 -> loadEvents("upcoming")   // Fetch upcoming events
-                    2 -> loadEvents("canceled")   // Fetch canceled events
                 }
             }
 
@@ -69,37 +69,16 @@ class EventsFragment : Fragment() {
         })
     }
 
-    // Fetch events from Firestore based on their category (completed, upcoming, canceled)
+    // Fetch events from Firestore based on their category (completed, upcoming)
     private fun loadEvents(status: String) {
         val currentDate = Date()
         val formattedCurrentDate = dateFormat.format(currentDate)
 
         when (status) {
-            "completed" -> {
-                // Fetch events with dates in the past
-                db.collection("events")
-                    .whereGreaterThan("date", formattedCurrentDate)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        val events = documents.map { document ->
-                            Event(
-                                title = document.getString("title") ?: "Unknown Title",
-                                location = document.getString("location") ?: "Unknown Location",
-                                date = document.getString("date") ?: "Unknown Date",
-                                imageRes = R.drawable.default_event_image, // Use default or update with URL if needed
-                                time = document.getString("time") ?: "Unknown Time"
-                            )
-                        }
-                        handleEventList(events)
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.e("EventsFragment", "Error getting documents: ", exception)
-                    }
-            }
             "upcoming" -> {
                 // Fetch events with dates in the future
                 db.collection("events")
-                    .whereLessThan("date", formattedCurrentDate)
+                    .whereLessThan("date", formattedCurrentDate) // Changed to fetch future events
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
@@ -107,7 +86,6 @@ class EventsFragment : Fragment() {
                                 title = document.getString("title") ?: "Unknown Title",
                                 location = document.getString("location") ?: "Unknown Location",
                                 date = document.getString("date") ?: "Unknown Date",
-                                imageRes = R.drawable.default_event_image,
                                 time = document.getString("time") ?: "Unknown Time"
                             )
                         }
@@ -117,11 +95,10 @@ class EventsFragment : Fragment() {
                         Log.e("EventsFragment", "Error getting documents: ", exception)
                     }
             }
-            "canceled" -> {
-                // Fetch events explicitly marked as canceled
+            "completed" -> {
+                // Fetch events with dates in the past
                 db.collection("events")
-                    .whereEqualTo("status", "canceled")
-                    .orderBy("date")
+                    .whereGreaterThan("date", formattedCurrentDate) // Changed to fetch past events
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
@@ -129,7 +106,6 @@ class EventsFragment : Fragment() {
                                 title = document.getString("title") ?: "Unknown Title",
                                 location = document.getString("location") ?: "Unknown Location",
                                 date = document.getString("date") ?: "Unknown Date",
-                                imageRes = R.drawable.default_event_image,
                                 time = document.getString("time") ?: "Unknown Time"
                             )
                         }

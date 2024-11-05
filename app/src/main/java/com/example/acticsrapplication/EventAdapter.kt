@@ -7,7 +7,6 @@ import com.example.acticsrapplication.databinding.ItemEventBinding
 
 
 // This Adapter file is used in fragment_event.kt for showing events, like Completed, Upcoming and Canceled Events
-
 class EventAdapter(
     private var events: MutableList<Event>
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
@@ -19,7 +18,6 @@ class EventAdapter(
             binding.eventLocation.text = event.location
             binding.eventDate.text = event.date
             binding.eventTime.text = event.time
-            binding.eventImage.setImageResource(event.imageRes)
         }
     }
 
