@@ -1,4 +1,3 @@
-<!-- activity_update_profile.xml -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -10,94 +9,59 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Profile Picture Update Button -->
-        <Button
-            android:id="@+id/buttonChangeProfilePic"
+        <!-- Headline -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Profile Picture"/>
-
+            android:text="Update your Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp"/>
         <!-- Full Name -->
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"/>
+            android:hint="Name"/>
 
-        <!-- Student ID -->
+        <!-- Branch Name -->
         <EditText
-            android:id="@+id/editTextStudentId"
+            android:id="@+id/editTextBranchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Student ID"
-            android:inputType="text"/>
-
-        <!-- Email Address -->
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"/>
+            android:hint="Branch Name"/>
 
         <!-- Mobile Number -->
         <EditText
             android:id="@+id/editTextMobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mobile Number"
+            android:hint="Mobile No"
             android:inputType="phone"/>
 
-        <!-- Date of Birth -->
+        <!-- Registration Number -->
         <EditText
-            android:id="@+id/editTextDOB"
+            android:id="@+id/editTextRegistrationNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date of Birth"
-            android:inputType="date"/>
-
-        <!-- Course or Program of Study -->
-        <EditText
-            android:id="@+id/editTextCourse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Course/Program of Study"/>
+            android:hint="Registration No"
+            android:inputType="text"/>
 
         <!-- Year of Study -->
         <EditText
             android:id="@+id/editTextYearOfStudy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Year of Study (e.g., Freshman, Sophomore)"/>
+            android:hint="Year of Study"/>
 
-        <!-- Major/Minor -->
+        <!-- Email Address -->
         <EditText
-            android:id="@+id/editTextMajorMinor"
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Major/Minor"/>
-
-        <!-- Academic Year -->
-        <EditText
-            android:id="@+id/editTextAcademicYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Academic Year"/>
-
-        <!-- Alternate Email -->
-        <EditText
-            android:id="@+id/editTextAlternateEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Alternate Email"
+            android:hint="Email"
             android:inputType="textEmailAddress"/>
-
-        <!-- Social Media Links -->
-        <EditText
-            android:id="@+id/editTextSocialMediaLinks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Social Media Links (e.g., LinkedIn, Facebook)"/>
 
         <!-- Save Button -->
         <Button
