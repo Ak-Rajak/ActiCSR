@@ -6,22 +6,15 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Banner Image Selector -->
-    <ImageView
-        android:id="@+id/imageViewBanner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:background="#E0E0E0"
-        android:contentDescription="Event Banner"/>
-
-    <Button
-        android:id="@+id/buttonSelectImage"
+    <!-- Headline -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Banner Image"
-        android:layout_marginTop="8dp"/>
-
+        android:text="Add new Event here"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp"/>
     <!-- Event Details -->
     <EditText
         android:id="@+id/editTextTitle"
