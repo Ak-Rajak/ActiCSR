@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/admin_nav_home"
+        android:icon="@drawable/bottom_home_2"
+        android:title="Home"/>
 
+    <item
+        android:id="@+id/admin_nav_add_event"
+        android:icon="@drawable/add_events"
+        android:title="AddEvents"/>
+
+    <item
+        android:id="@+id/admin_nav_view_event"
+        android:icon="@drawable/ic_calendar"
+        android:title="ViewEvents"/>
+
+    <item
+        android:id="@+id/admin_nav_view_reg"
+        android:icon="@drawable/admin_nav_register"
+        android:title="ViewRegistration"/>
 </menu>
