@@ -3,7 +3,6 @@ package com.example.acticsrapplication
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,24 +38,40 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        //bottom navigation
+        // Bottom navigation
         adminbottomNavigationView = findViewById(R.id.admin_bottom_navigation)
         adminbottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.bottom_nav_home -> loadFragment(HomeFragment())
-                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
-                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
-                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+                R.id.admin_nav_home -> {
+                    loadFragment(HomeFragment())
+                }
+                R.id.admin_nav_add_event -> {
+                    loadFragment(AddEventFragment())
+                }
+                R.id.admin_nav_view_event -> {
+                    loadFragment(EventsFragment())
+                }
+                R.id.admin_nav_view_reg -> {
+                    loadFragment(ViewRegistrationsFragment())
+                }
             }
-            true // Returning true to indicate item selection was handled
+            true // Return true to indicate item selection was handled
         }
 
         adminbottomNavigationView.setOnItemReselectedListener { item ->
             when (item.itemId) {
-                R.id.bottom_nav_home -> loadFragment(HomeFragment())
-                R.id.bottom_nav_forYou -> loadFragment(EventsFragment())
-                R.id.bottom_nav_interest -> loadFragment(EventsFragment())
-                R.id.bottom_nav_profile -> loadFragment(ProfileFragment())
+                R.id.admin_nav_home -> {
+                    loadFragment(HomeFragment())
+                }
+                R.id.admin_nav_add_event -> {
+                    loadFragment(AddEventFragment())
+                }
+                R.id.admin_nav_view_event -> {
+                    loadFragment(EventsFragment())
+                }
+                R.id.admin_nav_view_reg -> {
+                    loadFragment(ViewRegistrationsFragment())
+                }
             }
         }
 
@@ -71,30 +86,12 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.admin_home -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AdminHomeFragment()).commit()
-            }
-            R.id.admin_add_event -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AddEventFragment()).commit()
-            }
-            R.id.admin_view_event -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, EventsFragment()).commit()
-            }
-            R.id.admin_event_register -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ViewRegistrationsFragment()).commit()
-            }
-            R.id.admin_about_us -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, AboutFragment()).commit()
-            }
-            R.id.admin_logout -> {
-                showLogoutConfirmationDialog()
-                Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show()
-            }
+            R.id.admin_home -> loadFragment(AdminHomeFragment())
+            R.id.admin_add_event -> loadFragment(AddEventFragment())
+            R.id.admin_view_event -> loadFragment(EventsFragment())
+            R.id.admin_event_register -> loadFragment(ViewRegistrationsFragment())
+            R.id.admin_about_us -> loadFragment(AboutFragment())
+            R.id.admin_logout -> showLogoutConfirmationDialog()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -108,7 +105,6 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun showLogoutConfirmationDialog() {
         // Create an AlertDialog to confirm logout
-
         AlertDialog.Builder(this).apply {
             setTitle("Logout")
             setMessage("Are you sure you want to logout?")
@@ -117,7 +113,6 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             create().show()
         }
     }
-
 
     private fun logout() {
         // Sign out from Firebase
