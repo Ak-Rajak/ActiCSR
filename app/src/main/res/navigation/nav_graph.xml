@@ -1,0 +1,34 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/eventsFragment">
+
+    <fragment
+        android:id="@+id/eventsFragment"
+        android:name="com.example.acticsrapplication.EventsFragment"
+        android:label="EventsFragment">
+        <action
+            android:id="@+id/action_eventsFragment_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="com.example.acticsrapplication.EventDetailFragment"
+        android:label="EventDetailFragment">
+
+        <argument
+            android:name="eventTitle"
+            app:argType="string" />
+        <argument
+            android:name="eventLocation"
+            app:argType="string" />
+        <argument
+            android:name="eventDate"
+            app:argType="string" />
+        <argument
+            android:name="eventTime"
+            app:argType="string" />
+
+    </fragment>
+
+</navigation>
