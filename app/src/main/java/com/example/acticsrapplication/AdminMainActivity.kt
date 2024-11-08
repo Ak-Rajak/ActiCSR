@@ -43,7 +43,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         adminbottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.admin_nav_home -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(AdminHomeFragment())
                 }
                 R.id.admin_nav_add_event -> {
                     loadFragment(AddEventFragment())
@@ -61,7 +61,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         adminbottomNavigationView.setOnItemReselectedListener { item ->
             when (item.itemId) {
                 R.id.admin_nav_home -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(AdminHomeFragment())
                 }
                 R.id.admin_nav_add_event -> {
                     loadFragment(AddEventFragment())
