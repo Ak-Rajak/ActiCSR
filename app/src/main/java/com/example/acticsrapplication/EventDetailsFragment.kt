@@ -1,10 +1,12 @@
 package com.example.acticsrapplication
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +23,7 @@ class EventDetailsFragment : Fragment() {
     private lateinit var eventDate: TextView
     private lateinit var eventDescription: TextView
     private lateinit var eventCoordinatorName: TextView
+    private lateinit var registerButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +42,15 @@ class EventDetailsFragment : Fragment() {
         eventDate = binding.findViewById(R.id.eventDate)
         eventDescription = binding.findViewById(R.id.eventDescription)
         eventCoordinatorName = binding.findViewById(R.id.eventCoordinatorName)
+        registerButton = binding.findViewById(R.id.registerButton)
 
         // Load event data based on eventId
         loadEventDetails()
 
+        // Set up onclick
+        registerButton.setOnClickListener {
+            showRegistrationConfirmationDialog()
+        }
         return binding
     }
 
@@ -88,4 +96,18 @@ class EventDetailsFragment : Fragment() {
             Log.e("EventDetailsFragment", "Event ID is null or empty")
         }
     }
+
+    private fun showRegistrationConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirm registration")
+            .setMessage("Do you want to register for this events ?")
+            .setIcon(R.drawable.baseline_interests_24)
+            .setPositiveButton("Yes") {_,_ ->
+//                registerForEvent()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+
 }
