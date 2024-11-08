@@ -2,6 +2,7 @@ package com.example.acticsrapplication
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.type.Date
 
 class EventDetailsFragment : Fragment() {
 
@@ -103,11 +107,35 @@ class EventDetailsFragment : Fragment() {
             .setMessage("Do you want to register for this events ?")
             .setIcon(R.drawable.baseline_interests_24)
             .setPositiveButton("Yes") {_,_ ->
-//                registerForEvent()
+                registerForEvent()
             }
             .setNegativeButton("No", null)
             .show()
     }
 
+    private fun registerForEvent() {
+        eventId?.let { id ->
+            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
+            val registrationData = mapOf(
+                "userId" to currentUserId,
+                "timestamp" to java.util.Date()
+            )
+
+            // Store registration data
+            if (currentUserId != null) {
+                db.collection("events").document(id)
+                    .collection("registrations")
+                    .document(currentUserId)
+                    .set(registrationData , SetOptions.merge())
+                    .addOnSuccessListener {
+                        Log.d("EventDetailsFragment", "Registration successful!")
+                        showSuccessMessage("Registered successfully !")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("EventDetailsFragment","Error registering for event", e)
+                    }
+            }
+        } ?: Log.e("EventDetailsFragment" , "Event ID is null or empty")
+    }
 }
