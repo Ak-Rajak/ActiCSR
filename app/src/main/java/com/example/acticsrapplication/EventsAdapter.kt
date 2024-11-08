@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 // This Adapter file is used in fragment_home.xml for showing events, Like Upcoming and Interested Events
 // RecyclerView Adapter for Events
-class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
+class EventsAdapter(private var events: MutableList<Event>) : RecyclerView.Adapter<EventsAdapter.EventViewHolder>() {
 
+    // ViewHolder class to hold references to views
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.event_title)
         val location: TextView = itemView.findViewById(R.id.event_location)
@@ -32,5 +33,12 @@ class EventsAdapter(private val events: List<Event>) : RecyclerView.Adapter<Even
 
     override fun getItemCount(): Int {
         return events.size
+    }
+
+    // Method to update the events list and notify the adapter
+    fun updateEvents(newEvents: List<Event>) {
+        events.clear()
+        events.addAll(newEvents)
+        notifyDataSetChanged() // Notify the adapter that the data has changed
     }
 }

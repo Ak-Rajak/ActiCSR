@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         FirebaseApp.initializeApp(this)
 
         // Set Firebase Database log level to DEBUG
-        FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG) // Correct log level setup
+        FirebaseDatabase.getInstance().setLogLevel(com.google.firebase.database.Logger.Level.DEBUG)
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()

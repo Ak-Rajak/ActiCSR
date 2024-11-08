@@ -9,20 +9,6 @@
     android:background="@drawable/rounded_corner_background"
     android:clipToPadding="false">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@drawable/rounded_image_top_corners">
-
-        <!-- Event Image -->
-        <ImageView
-            android:id="@+id/event_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="@drawable/banner"/>
-    </FrameLayout>
-
     <!-- Event Details -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +36,7 @@
                     android:id="@+id/event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="#999999"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="10dp" />
@@ -59,7 +45,7 @@
                     android:id="@+id/event_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="#999999"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
