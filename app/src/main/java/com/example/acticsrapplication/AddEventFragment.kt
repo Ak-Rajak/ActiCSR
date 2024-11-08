@@ -18,10 +18,6 @@ class AddEventFragment : Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
     private var selectedDate: Calendar? = null // To store selected date for validation
 
-    companion object {
-        private const val IMAGE_PICK_CODE = 1000
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -101,6 +97,7 @@ class AddEventFragment : Fragment() {
         place: String,
         description: String
     ) {
+        // Initial event data without eventId
         val event = hashMapOf(
             "title" to title,
             "coordinatorName" to coordinatorName,
@@ -110,15 +107,24 @@ class AddEventFragment : Fragment() {
             "description" to description
         )
 
+        // Add event to Firestore
         firestore.collection("events").add(event)
-            .addOnSuccessListener {
-                Toast.makeText(activity, "Event saved successfully!", Toast.LENGTH_SHORT).show()
+            .addOnSuccessListener { documentReference ->
+                // Retrieve auto-generated ID and add it as eventId
+                val eventId = documentReference.id
+                documentReference.update("eventId", eventId)
+                    .addOnSuccessListener {
+                        Toast.makeText(activity, "Event saved successfully!", Toast.LENGTH_SHORT).show()
 
-                // Redirect to EventsFragment
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragment_container, EventsFragment())
-                    ?.addToBackStack(null)
-                    ?.commit()
+                        // Redirect to EventsFragment
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.fragment_container, EventsFragment())
+                            ?.addToBackStack(null)
+                            ?.commit()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(activity, "Failed to save event ID: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(activity, "Failed to save event: ${e.message}", Toast.LENGTH_SHORT).show()
