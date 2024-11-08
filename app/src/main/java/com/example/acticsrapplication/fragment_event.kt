@@ -25,7 +25,7 @@ class EventsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentEventBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,13 +42,29 @@ class EventsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        eventAdapter = EventAdapter(mutableListOf()) // Start with an empty list
+        // Initialize the adapter with a click listener to handle event selection
+        eventAdapter = EventAdapter(mutableListOf()) { event ->
+            // Handle item click: navigate to event details page using FragmentTransaction
+            val eventDetailsFragment = EventDetailsFragment()
+
+            // Pass data to the EventDetailsFragment using a Bundle
+            val bundle = Bundle()
+            bundle.putString("eventId", event.id) // Pass the eventId or other details
+            eventDetailsFragment.arguments = bundle
+
+            // Use FragmentTransaction to replace or add the fragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, eventDetailsFragment) // Correct container ID here
+                .addToBackStack(null)  // Optional: To allow back navigation
+                .commit()
+        }
         binding.recyclerViewEvents.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewEvents.adapter = eventAdapter
     }
 
+
+
     private fun setupTabs() {
-        // Only two tabs: Completed and Upcoming
         val tabTitles = listOf("Completed", "Upcoming")
         tabTitles.forEach { title ->
             binding.tabLayout.addTab(binding.tabLayout.newTab().setText(title))
@@ -59,8 +75,8 @@ class EventsFragment : Fragment() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> loadEvents("completed")  // Fetch completed events
-                    1 -> loadEvents("upcoming")   // Fetch upcoming events
+                    0 -> loadEvents("completed")
+                    1 -> loadEvents("upcoming")
                 }
             }
 
@@ -69,24 +85,31 @@ class EventsFragment : Fragment() {
         })
     }
 
-    // Fetch events from Firestore based on their category (completed, upcoming)
     private fun loadEvents(status: String) {
-        val currentDate = Date()
-        val formattedCurrentDate = dateFormat.format(currentDate)
+        val currentDate = dateFormat.format(Date())
 
         when (status) {
             "upcoming" -> {
-                // Fetch events with dates in the future
                 db.collection("events")
-                    .whereLessThan("date", formattedCurrentDate) // Changed to fetch future events
+                    .whereLessThan("date", currentDate)
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
+                            val title = document.getString("title") ?: "Unknown Title"
+                            val location = document.getString("place") ?: "Unknown Location"
+                            val date = document.getString("date") ?: "Unknown Date"
+                            val time = document.getString("time") ?: "Unknown Time"
+
+                            // Log the document data for debugging purposes
+                            Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
+
+                            // Create an Event object
                             Event(
-                                title = document.getString("title") ?: "Unknown Title",
-                                location = document.getString("location") ?: "Unknown Location",
-                                date = document.getString("date") ?: "Unknown Date",
-                                time = document.getString("time") ?: "Unknown Time"
+                                id = document.id,
+                                title = title,
+                                location = location,
+                                date = date,
+                                time = time
                             )
                         }
                         handleEventList(events)
@@ -96,17 +119,26 @@ class EventsFragment : Fragment() {
                     }
             }
             "completed" -> {
-                // Fetch events with dates in the past
                 db.collection("events")
-                    .whereGreaterThan("date", formattedCurrentDate) // Changed to fetch past events
+                    .whereGreaterThan("date", currentDate)
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
+                            val title = document.getString("title") ?: "Unknown Title"
+                            val location = document.getString("place") ?: "Unknown Location"
+                            val date = document.getString("date") ?: "Unknown Date"
+                            val time = document.getString("time") ?: "Unknown Time"
+
+                            // Log the document data for debugging purposes
+                            Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
+
+                            // Create an Event object
                             Event(
-                                title = document.getString("title") ?: "Unknown Title",
-                                location = document.getString("location") ?: "Unknown Location",
-                                date = document.getString("date") ?: "Unknown Date",
-                                time = document.getString("time") ?: "Unknown Time"
+                                id = document.id,
+                                title = title,
+                                location = location,
+                                date = date,
+                                time = time
                             )
                         }
                         handleEventList(events)
@@ -120,19 +152,22 @@ class EventsFragment : Fragment() {
 
     // Handle the event list and show/hide the "No events" message
     private fun handleEventList(events: List<Event>) {
-        eventAdapter.updateEvents(events)
+        // Ensure binding is not null before accessing it
+        _binding?.let { safeBinding ->
+            eventAdapter.updateEvents(events)
 
-        if (events.isEmpty()) {
-            binding.noEventsText.visibility = View.VISIBLE
-            binding.recyclerViewEvents.visibility = View.GONE
-        } else {
-            binding.noEventsText.visibility = View.GONE
-            binding.recyclerViewEvents.visibility = View.VISIBLE
+            if (events.isEmpty()) {
+                safeBinding.noEventsText.visibility = View.VISIBLE
+                safeBinding.recyclerViewEvents.visibility = View.GONE
+            } else {
+                safeBinding.noEventsText.visibility = View.GONE
+                safeBinding.recyclerViewEvents.visibility = View.VISIBLE
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Clear the binding reference to avoid memory leaks
+        _binding = null // Nullify the binding to avoid memory leaks
     }
 }
