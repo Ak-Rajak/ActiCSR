@@ -138,4 +138,11 @@ class EventDetailsFragment : Fragment() {
             }
         } ?: Log.e("EventDetailsFragment" , "Event ID is null or empty")
     }
+
+    private fun showSuccessMessage(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(message)
+            .setPositiveButton("OK",null)
+            .show()
+    }
 }
