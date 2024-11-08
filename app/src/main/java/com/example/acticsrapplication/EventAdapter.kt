@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.ItemEventBinding
 
-
-// This Adapter file is used in fragment_event.kt for showing events, like Completed, Upcoming and Canceled Events
+// This Adapter file is used in fragment_event.kt for showing events, like Completed, Upcoming Events
 class EventAdapter(
-    private var events: MutableList<Event>
+    private var events: MutableList<Event>,
+    private val itemClickListener: (Event) -> Unit // Change this to pass the full Event object
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     // ViewHolder class to bind the data to the view
@@ -18,6 +18,11 @@ class EventAdapter(
             binding.eventLocation.text = event.location
             binding.eventDate.text = event.date
             binding.eventTime.text = event.time
+
+            // Set up the click listener for each event item
+            itemView.setOnClickListener {
+                itemClickListener(event) // Pass the full event object
+            }
         }
     }
 
