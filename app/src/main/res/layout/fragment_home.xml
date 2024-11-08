@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp">
+
             <!-- TextView to Display Selected Campus -->
             <TextView
                 android:id="@+id/selected_campus"
@@ -26,6 +27,7 @@
                 android:textSize="18sp"
                 android:textColor="#000000"
                 android:paddingTop="8dp"/>
+
             <!-- Spinner for Campus Selection -->
             <Spinner
                 android:id="@+id/campus_spinner"
@@ -34,30 +36,6 @@
                 android:minHeight="48dp"
                 android:spinnerMode="dropdown" />
 
-        </LinearLayout>
-
-        <!-- Explore Categories Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Explore Categories"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <!-- RecyclerView for categories with Horizontal Scrolling -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:scrollbars="none"
-                android:padding="16dp"/>
         </LinearLayout>
 
         <!-- Upcoming Events Section -->
@@ -85,30 +63,6 @@
                 android:orientation="horizontal"
                 android:clipToPadding="false"
                 android:paddingEnd="16dp" />
-        </LinearLayout>
-
-
-        <!-- Events You're Interested In Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Events that You're Interested in"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <!-- RecyclerView for Interested Events -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/interested_events_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:scrollbars="vertical" />
         </LinearLayout>
 
     </LinearLayout>

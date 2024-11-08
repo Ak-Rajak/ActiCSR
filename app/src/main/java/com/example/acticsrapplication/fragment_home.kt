@@ -1,6 +1,7 @@
 package com.example.acticsrapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +13,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.FragmentHomeBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private lateinit var campusSpinner: Spinner
     private lateinit var selectedCampus: TextView
     private lateinit var recyclerViewUpcoming: RecyclerView
-    private lateinit var recyclerViewInterested: RecyclerView
     private lateinit var eventsAdapterUpcoming: EventsAdapter
-    private lateinit var eventsAdapterInterested: EventsAdapter
-
-    // Sample category data
-    private val categoryList = listOf(
-        Category(R.drawable.category1, "Category 1"),
-        Category(R.drawable.category2, "Category 2"),
-        Category(R.drawable.category3, "Category 3"),
-        Category(R.drawable.category4, "Category 4"),
-        Category(R.drawable.category5, "Category 5")
-    )
+    private val db = FirebaseFirestore.getInstance() // Firestore instance
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -39,10 +34,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        // Setup RecyclerView for categories (horizontal scrolling)
-        binding.categoryRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.categoryRecyclerView.adapter = CategoryAdapter(categoryList)
 
         // Setup Spinner for Campus Selection
         campusSpinner = binding.campusSpinner
@@ -70,39 +61,45 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Setup RecyclerViews for Upcoming and Interested Events
+        // Setup RecyclerView for Upcoming Events
         recyclerViewUpcoming = binding.upcomingEventsRecycler
-        recyclerViewInterested = binding.interestedEventsRecycler
-
-        // Sample data for Upcoming Events
-        val upcomingEvents = listOf(
-            Event("Gajajoti 2025", "Studio 44", "March 1, 2025",  "05:00 PM"),
-            Event("Tech Conference 2025", "Main Hall", "April 15, 2025",  "10:00 AM"),
-            Event("Art Exhibition", "Gallery 3", "June 5, 2025",  "02:00 PM")
-        )
-
-// Sample data for Interested Events
-        val interestedEvents = listOf(
-            Event("Music Fest", "Outdoor Stage", "May 10, 2025",  "07:00 PM"),
-            Event("Startup Workshop", "Room 201", "May 15, 2025",  "09:00 AM")
-        )
-
-
-        // Set up the adapters and layout managers for RecyclerViews
-        eventsAdapterUpcoming = EventsAdapter(upcomingEvents)
-        eventsAdapterInterested = EventsAdapter(interestedEvents)
+        eventsAdapterUpcoming = EventsAdapter(mutableListOf())
 
         // Horizontal scrolling for upcoming events
         recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        // Horizontal scrolling for interested events
-        recyclerViewInterested.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
         recyclerViewUpcoming.adapter = eventsAdapterUpcoming
-        recyclerViewInterested.adapter = eventsAdapterInterested
 
-        // Return the root view now that all the setup is complete
+        // Load upcoming events from Firestore
+        loadUpcomingEvents()
+
         return binding.root
+    }
+
+    private fun loadUpcomingEvents() {
+        db.collection("events")
+            .whereLessThan("date", getCurrentDate()) // Assumes `date` field is a string in "MMM dd, yyyy" format
+            .get()
+            .addOnSuccessListener { documents ->
+                val upcomingEvents = documents.map { document ->
+                    Event(
+                        id = document.id,
+                        title = document.getString("title") ?: "Unknown Title",
+                        location = document.getString("place") ?: "Unknown Location",
+                        date = document.getString("date") ?: "Unknown Date",
+                        time = document.getString("time") ?: "Unknown Time"
+                    )
+                }
+                eventsAdapterUpcoming.updateEvents(upcomingEvents)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("HomeFragment", "Error getting upcoming events: ", exception)
+            }
+    }
+
+    // Helper function to get the current date in the required format
+    private fun getCurrentDate(): String {
+        val formatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+        return formatter.format(Date())
     }
 
     override fun onDestroyView() {
