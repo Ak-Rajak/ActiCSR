@@ -12,61 +12,80 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Event Image -->
-        <ImageView
-            android:id="@+id/eventImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/banner" />
-
         <!-- Event Title and Coordinator -->
         <TextView
             android:id="@+id/eventTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="International Band Music Concert"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#000000"
             android:layout_marginTop="16dp" />
 
-        <TextView
-            android:id="@+id/eventCoordinator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Co-ordinate by Rati Ranjan Mishra"
-            android:textSize="14sp"
-            android:textColor="#607D8B"
-            android:layout_marginTop="4dp" />
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                    <TextView
+                        android:text="Co-ordinated by: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="#607D8B"
+                        android:layout_marginTop="4dp" />
+                    <TextView
+                        android:id="@+id/eventCoordinatorName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="#607D8B"
+                        android:layout_marginTop="4dp" />
+            </LinearLayout>
         <!-- Date and Time Section -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="16dp">
+            android:gravity="center_vertical">
 
             <ImageView
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:src="@drawable/ic_calendar"
-                app:tint="#5872FF"/>
+                app:tint="#5872FF"
+                android:layout_marginTop="6dp"/>
 
-            <TextView
-                android:id="@+id/eventDateTime"
-                android:layout_width="wrap_content"
+            <!-- Date and Time Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="14 November, 2024\nTuesday, 4:00PM - 9:00PM"
-                android:textSize="16sp"
-                android:textColor="#000000" />
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <!-- Event Date -->
+                <TextView
+                    android:id="@+id/eventDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <!-- Event Time -->
+                <TextView
+                    android:id="@+id/eventTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <!-- Location Section -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -79,11 +98,10 @@
                 app:tint="#5872FF"/>
 
             <TextView
-                android:id="@+id/eventLocation"
+                android:id="@+id/eventPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="ARYABHATA\nAuditorium, Hall No–06"
                 android:textSize="16sp"
                 android:textColor="#000000" />
         </LinearLayout>
@@ -100,10 +118,9 @@
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/aboutEventDescription"
+            android:id="@+id/eventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="It's not just a concert but a cultural exchange, where music becomes a universal language, uniting people across borders..."
             android:textSize="14sp"
             android:textColor="#757575"
             android:layout_marginTop="8dp" />
@@ -122,6 +139,14 @@
             android:padding="12dp"
             android:textAllCaps="true"
             android:elevation="4dp" />
+
+        <!-- ProgressBar to show while loading -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" /> <!-- Initially hidden -->
 
     </LinearLayout>
 </ScrollView>
