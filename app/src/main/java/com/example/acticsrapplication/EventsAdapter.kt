@@ -5,8 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import com.google.firebase.Timestamp
+import java.util.*
 
-// This Adapter file is used in fragment_home.xml for showing events, Like Upcoming and Interested Events
+// This Adapter file is used in fragment_home.xml for showing events, like Upcoming and Interested Events
 // RecyclerView Adapter for Events
 class EventsAdapter(
     private var events: MutableList<Event>,
@@ -30,7 +33,10 @@ class EventsAdapter(
         val event = events[position]
         holder.title.text = event.title
         holder.location.text = event.location
-        holder.date.text = event.date
+
+        // Format the date (if it's a Timestamp)
+        holder.date.text = formatDate(event.date)
+
         holder.time.text = event.time
 
         holder.itemView.setOnClickListener {
@@ -47,5 +53,12 @@ class EventsAdapter(
         events.clear()
         events.addAll(newEvents)
         notifyDataSetChanged() // Notify the adapter that the data has changed
+    }
+
+    // Helper function to format the Timestamp into a string
+    private fun formatDate(timestamp: Timestamp): String {
+        val date = timestamp.toDate() // Convert Timestamp to Date
+        val formatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) // Define your date format
+        return formatter.format(date) // Return the formatted date as string
     }
 }

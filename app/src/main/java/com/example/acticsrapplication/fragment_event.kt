@@ -106,12 +106,12 @@ class EventsFragment : Fragment() {
                             // Log the document data for debugging purposes
                             Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
 
-                            // Create an Event object
+                            // Create an Event object with the Timestamp value
                             Event(
                                 id = document.id,
                                 title = title,
                                 location = location,
-                                date = date,
+                                date = dateTimestamp ?: Timestamp.now(), // Pass the Timestamp directly
                                 time = time
                             )
                         }
@@ -138,12 +138,12 @@ class EventsFragment : Fragment() {
                             // Log the document data for debugging purposes
                             Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
 
-                            // Create an Event object
+                            // Create an Event object with the Timestamp value
                             Event(
                                 id = document.id,
                                 title = title,
                                 location = location,
-                                date = date,
+                                date = dateTimestamp ?: Timestamp.now(), // Pass the Timestamp directly
                                 time = time
                             )
                         }

@@ -14,9 +14,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.FragmentHomeBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class HomeFragment : Fragment() {
@@ -64,8 +65,8 @@ class HomeFragment : Fragment() {
 
         // Setup RecyclerView for Upcoming Events
         recyclerViewUpcoming = binding.upcomingEventsRecycler
-        eventsAdapterUpcoming = EventsAdapter(mutableListOf()) { events ->
-            navigateToEventRegistration(events.id)
+        eventsAdapterUpcoming = EventsAdapter(mutableListOf()) { event ->
+            navigateToEventRegistration(event.id)
         }
 
         // Horizontal scrolling for upcoming events
@@ -80,15 +81,18 @@ class HomeFragment : Fragment() {
 
     private fun loadUpcomingEvents() {
         db.collection("events")
-            .whereLessThan("date", getCurrentDate()) // Assumes `date` field is a string in "MMM dd, yyyy" format
+            .whereGreaterThan("date", Timestamp.now()) // Use Timestamp to filter events after the current date
+            .orderBy("date", Query.Direction.ASCENDING) // Order events by date
             .get()
             .addOnSuccessListener { documents ->
                 val upcomingEvents = documents.map { document ->
+                    val timestamp = document.getTimestamp("date") ?: Timestamp.now()
+                    val date = timestamp.toDate()
                     Event(
                         id = document.id,
                         title = document.getString("title") ?: "Unknown Title",
                         location = document.getString("place") ?: "Unknown Location",
-                        date = document.getString("date") ?: "Unknown Date",
+                        date = timestamp,  // Store the Timestamp directly
                         time = document.getString("time") ?: "Unknown Time"
                     )
                 }
@@ -99,14 +103,15 @@ class HomeFragment : Fragment() {
             }
     }
 
-    // Helper function to get the current date in the required format
-    private fun getCurrentDate(): String {
+    // Helper function to convert Timestamp to formatted string
+    private fun formatDate(timestamp: Timestamp): String {
+        val date = timestamp.toDate()
         val formatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-        return formatter.format(Date())
+        return formatter.format(date)
     }
 
     private fun navigateToEventRegistration(eventId: String) {
-        val eventDetailsFragment= EventDetailsFragment() // Assuming this fragment exists
+        val eventDetailsFragment = EventDetailsFragment() // Assuming this fragment exists
         val args = Bundle().apply {
             putString("eventId", eventId) // Passing the event ID as an argument
         }
