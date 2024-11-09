@@ -2,18 +2,20 @@ package com.example.acticsrapplication
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.type.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EventDetailsFragment : Fragment() {
 
@@ -28,6 +30,7 @@ class EventDetailsFragment : Fragment() {
     private lateinit var eventDescription: TextView
     private lateinit var eventCoordinatorName: TextView
     private lateinit var registerButton: Button
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +50,12 @@ class EventDetailsFragment : Fragment() {
         eventDescription = binding.findViewById(R.id.eventDescription)
         eventCoordinatorName = binding.findViewById(R.id.eventCoordinatorName)
         registerButton = binding.findViewById(R.id.registerButton)
+        progressBar = binding.findViewById(R.id.progressBar)
 
         // Load event data based on eventId
         loadEventDetails()
 
-        // Set up onclick
+        // Set up onclick listener for the register button
         registerButton.setOnClickListener {
             showRegistrationConfirmationDialog()
         }
@@ -59,44 +63,50 @@ class EventDetailsFragment : Fragment() {
     }
 
     private fun loadEventDetails() {
-        // Check if the eventId is null or empty
         eventId?.let { id ->
+            progressBar.visibility = View.VISIBLE  // Show loading progress bar
             db.collection("events")
                 .document(id)
                 .get()
                 .addOnSuccessListener { document ->
+                    progressBar.visibility = View.GONE  // Hide loading progress bar
                     if (document.exists()) {
-                        // Retrieve data from the Firestore document
                         val title = document.getString("title") ?: "Unknown Title"
                         val place = document.getString("place") ?: "Unknown Location"
-                        val time = document.getString("time") ?: "Unknown Time"
-                        val date = document.getString("date") ?: "Unknown Date"
+                        val coordinatorName = document.getString("coordinatorName") ?: "Unknown Coordinator"
                         val description = document.getString("description") ?: "No Description"
-                        val coordinatorName = document.getString("coordinatorName") ?: "Unknown"
+
+                        val dateTimestamp = document.getTimestamp("date")
+                        val dateTimeString = if (dateTimestamp != null) {
+                            // Format the timestamp into a readable date and time format
+                            val formattedDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(dateTimestamp.toDate())
+                            val formattedTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(dateTimestamp.toDate())
+
+                            // Split the date and time into separate values for different TextViews
+                            eventDate.text = formattedDate  // Display the date
+                            eventTime.text = formattedTime  // Display the time
+                        } else {
+                            eventDate.text = "Unknown Date"
+                            eventTime.text = "Unknown Time"
+                        }
 
                         // Log the data for debugging
-                        Log.d("EventDetailsFragment", "Event Data: Title = $title, Place = $place, Time = $time")
+                        Log.d("EventDetailsFragment", "Event Data: Title = $title, Place = $place, Date = ${eventDate.text}, Time = ${eventTime.text}")
 
                         // Update the UI with the retrieved event details
                         eventTitle.text = title
                         eventPlace.text = place
                         eventCoordinatorName.text = coordinatorName
                         eventDescription.text = description
-
-                        // Set separate date and time TextViews
-                        eventDate.text = date
-                        eventTime.text = time
                     } else {
-                        // Handle the case when the document does not exist
                         Log.d("EventDetailsFragment", "No such document")
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle any errors during Firestore retrieval
+                    progressBar.visibility = View.GONE  // Hide loading progress bar
                     Log.e("EventDetailsFragment", "Error fetching event details: ", exception)
                 }
         } ?: run {
-            // Handle the case when eventId is null
             Log.e("EventDetailsFragment", "Event ID is null or empty")
         }
     }
@@ -104,9 +114,9 @@ class EventDetailsFragment : Fragment() {
     private fun showRegistrationConfirmationDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Confirm registration")
-            .setMessage("Do you want to register for this events ?")
+            .setMessage("Do you want to register for this event?")
             .setIcon(R.drawable.baseline_interests_24)
-            .setPositiveButton("Yes") {_,_ ->
+            .setPositiveButton("Yes") { _, _ ->
                 registerForEvent()
             }
             .setNegativeButton("No", null)
@@ -116,33 +126,47 @@ class EventDetailsFragment : Fragment() {
     private fun registerForEvent() {
         eventId?.let { id ->
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-
-            val registrationData = mapOf(
-                "userId" to currentUserId,
-                "timestamp" to java.util.Date()
+            val registrationData = mutableMapOf<String, Any>(
+                "userId" to (currentUserId ?: ""),
+                "timestamp" to Timestamp.now()
             )
 
-            // Store registration data
+            // Parse date and time to Firestore Date
+            try {
+                val dateStr = eventDate.text.toString().trim()
+                val timeStr = eventTime.text.toString().trim()
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                val dateTimeStr = "$dateStr $timeStr"
+                val eventDateTime = dateFormat.parse(dateTimeStr)
+
+                if (eventDateTime != null) {
+                    registrationData["eventDate"] = Timestamp(eventDateTime)
+                }
+            } catch (e: Exception) {
+                Log.e("EventDetailsFragment", "Error parsing date and time", e)
+            }
+
+            // Save registration data
             if (currentUserId != null) {
                 db.collection("events").document(id)
                     .collection("registrations")
                     .document(currentUserId)
-                    .set(registrationData , SetOptions.merge())
+                    .set(registrationData, SetOptions.merge())
                     .addOnSuccessListener {
                         Log.d("EventDetailsFragment", "Registration successful!")
-                        showSuccessMessage("Registered successfully !")
+                        showSuccessMessage("Registered successfully!")
                     }
                     .addOnFailureListener { e ->
-                        Log.e("EventDetailsFragment","Error registering for event", e)
+                        Log.e("EventDetailsFragment", "Error registering for event", e)
                     }
             }
-        } ?: Log.e("EventDetailsFragment" , "Event ID is null or empty")
+        } ?: Log.e("EventDetailsFragment", "Event ID is null or empty")
     }
 
     private fun showSuccessMessage(message: String) {
         AlertDialog.Builder(requireContext())
             .setMessage(message)
-            .setPositiveButton("OK",null)
+            .setPositiveButton("OK", null)
             .show()
     }
 }

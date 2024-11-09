@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
@@ -17,6 +18,7 @@ class AddEventFragment : Fragment() {
 
     private val firestore = FirebaseFirestore.getInstance()
     private var selectedDate: Calendar? = null // To store selected date for validation
+    private var selectedTime: Calendar? = null // To store selected time for validation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +41,6 @@ class AddEventFragment : Fragment() {
                 selectedDate = Calendar.getInstance().apply {
                     set(year, month, day)
                 }
-
-                // Update EditText with selected date
                 editTextDate.setText("$day/${month + 1}/$year")
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
@@ -52,6 +52,10 @@ class AddEventFragment : Fragment() {
             val minute = calendar.get(Calendar.MINUTE)
 
             TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+                selectedTime = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, selectedHour)
+                    set(Calendar.MINUTE, selectedMinute)
+                }
                 val amPm = if (selectedHour < 12) "AM" else "PM"
                 val hourIn12Format = if (selectedHour % 12 == 0) 12 else selectedHour % 12
                 editTextTime.setText(String.format("%02d:%02d %s", hourIn12Format, selectedMinute, amPm))
@@ -62,28 +66,39 @@ class AddEventFragment : Fragment() {
         buttonSaveEvent.setOnClickListener {
             val title = editTextTitle.text.toString().trim()
             val coordinatorName = editTextCoordinatorName.text.toString().trim()
-            val date = editTextDate.text.toString().trim()
-            val time = editTextTime.text.toString().trim()
             val place = editTextPlace.text.toString().trim()
             val description = editTextDescription.text.toString().trim()
 
             // Validate fields
-            if (title.isEmpty() || coordinatorName.isEmpty() || date.isEmpty() || time.isEmpty() || place.isEmpty()) {
+            if (title.isEmpty() || coordinatorName.isEmpty() || editTextDate.text.isEmpty() || editTextTime.text.isEmpty() || place.isEmpty()) {
                 Toast.makeText(activity, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // Validate that the selected date is not in the past
-            selectedDate?.let {
+            selectedDate?.let { date ->
                 val currentDate = Calendar.getInstance()
-                if (it.before(currentDate)) {
+                if (date.before(currentDate)) {
                     Toast.makeText(activity, "You can't add event on past date", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
 
-            // Save event to Firestore
-            saveEventToFirestore(title, coordinatorName, date, time, place, description)
+            // Combine date and time
+            val eventDateTime = Calendar.getInstance().apply {
+                selectedDate?.let { date ->
+                    set(Calendar.YEAR, date.get(Calendar.YEAR))
+                    set(Calendar.MONTH, date.get(Calendar.MONTH))
+                    set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH))
+                }
+                selectedTime?.let { time ->
+                    set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY))
+                    set(Calendar.MINUTE, time.get(Calendar.MINUTE))
+                }
+            }.time
+
+            // Save event to Firestore with Timestamp
+            saveEventToFirestore(title, coordinatorName, Timestamp(eventDateTime), place, description)
         }
 
         return view
@@ -92,31 +107,24 @@ class AddEventFragment : Fragment() {
     private fun saveEventToFirestore(
         title: String,
         coordinatorName: String,
-        date: String,
-        time: String,
+        date: Timestamp,
         place: String,
         description: String
     ) {
-        // Initial event data without eventId
         val event = hashMapOf(
             "title" to title,
             "coordinatorName" to coordinatorName,
-            "date" to date,
-            "time" to time,
+            "date" to date,  // Use Timestamp here
             "place" to place,
             "description" to description
         )
 
-        // Add event to Firestore
         firestore.collection("events").add(event)
             .addOnSuccessListener { documentReference ->
-                // Retrieve auto-generated ID and add it as eventId
                 val eventId = documentReference.id
                 documentReference.update("eventId", eventId)
                     .addOnSuccessListener {
                         Toast.makeText(activity, "Event saved successfully!", Toast.LENGTH_SHORT).show()
-
-                        // Redirect to EventsFragment
                         activity?.supportFragmentManager?.beginTransaction()
                             ?.replace(R.id.fragment_container, EventsFragment())
                             ?.addToBackStack(null)
