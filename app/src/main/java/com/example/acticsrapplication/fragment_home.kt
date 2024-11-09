@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acticsrapplication.databinding.FragmentHomeBinding
@@ -63,7 +64,9 @@ class HomeFragment : Fragment() {
 
         // Setup RecyclerView for Upcoming Events
         recyclerViewUpcoming = binding.upcomingEventsRecycler
-        eventsAdapterUpcoming = EventsAdapter(mutableListOf())
+        eventsAdapterUpcoming = EventsAdapter(mutableListOf()) { events ->
+            navigateToEventRegistration(events.id)
+        }
 
         // Horizontal scrolling for upcoming events
         recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -100,6 +103,21 @@ class HomeFragment : Fragment() {
     private fun getCurrentDate(): String {
         val formatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
         return formatter.format(Date())
+    }
+
+    private fun navigateToEventRegistration(eventId: String) {
+        val eventDetailsFragment= EventDetailsFragment() // Assuming this fragment exists
+        val args = Bundle().apply {
+            putString("eventId", eventId) // Passing the event ID as an argument
+        }
+        eventDetailsFragment.arguments = args
+
+        // Perform the fragment transaction to navigate to EventRegistrationFragment
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, eventDetailsFragment) // Adjust container ID if needed
+            .addToBackStack(null) // Add to back stack to allow "back" navigation
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
     }
 
     override fun onDestroyView() {
