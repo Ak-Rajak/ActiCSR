@@ -11,31 +11,78 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Campus Selection -->
+        <!-- Overview Cards Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:weightSum="2"
+            android:layout_marginBottom="16dp">
 
-            <!-- TextView to Display Selected Campus -->
-            <TextView
-                android:id="@+id/selected_campus"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Campus: "
-                android:textSize="18sp"
-                android:textColor="#000000"
-                android:paddingTop="8dp"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:clipToOutline="true"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_corner_background">
 
-            <!-- Spinner for Campus Selection -->
-            <Spinner
-                android:id="@+id/campus_spinner"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/upcomingEvents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upcoming Events"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/upcomingEventsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="34"
+                    android:textSize="24sp"
+                    android:textColor="#00796B"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:spinnerMode="dropdown" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:clipToOutline="true"
+                android:elevation="4dp"
+                android:background="@drawable/rounded_corner_background">
 
+                <TextView
+                    android:id="@+id/totalEvents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Events"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalEventsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="34"
+                    android:textSize="24sp"
+                    android:textColor="#00796B"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Upcoming Events Section -->
@@ -65,5 +112,26 @@
                 android:paddingEnd="16dp" />
         </LinearLayout>
 
+        <!-- Recent Activity Section -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Registrations"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerRegistrationActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
