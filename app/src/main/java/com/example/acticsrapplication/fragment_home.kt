@@ -5,10 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,10 +18,10 @@ import java.util.Locale
 
 class HomeFragment : Fragment() {
 
-    private lateinit var campusSpinner: Spinner
-    private lateinit var selectedCampus: TextView
     private lateinit var recyclerViewUpcoming: RecyclerView
     private lateinit var eventsAdapterUpcoming: EventsAdapter
+    private lateinit var recyclerViewRecentActivity: RecyclerView
+    private lateinit var eventsAdapterRecentActivity: EventsAdapter
     private val db = FirebaseFirestore.getInstance() // Firestore instance
 
     private var _binding: FragmentHomeBinding? = null
@@ -37,31 +33,6 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // Setup Spinner for Campus Selection
-        campusSpinner = binding.campusSpinner
-        selectedCampus = binding.selectedCampus
-
-        // Setup Spinner Adapter with the campus list
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.campus_list,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            campusSpinner.adapter = adapter
-        }
-
-        // Handle Spinner Selection
-        campusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedItemView = view as TextView
-                selectedItemView.setTextColor(resources.getColor(R.color.midnight_blue))
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Do nothing
-            }
-        }
 
         // Setup RecyclerView for Upcoming Events
         recyclerViewUpcoming = binding.upcomingEventsRecycler
@@ -73,8 +44,19 @@ class HomeFragment : Fragment() {
         recyclerViewUpcoming.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerViewUpcoming.adapter = eventsAdapterUpcoming
 
-        // Load upcoming events from Firestore
+        // Setup RecyclerView for Your Registrations
+        recyclerViewRecentActivity = binding.recyclerRegistrationActivity
+        eventsAdapterRecentActivity = EventsAdapter(mutableListOf()) { event ->
+            navigateToEventRegistration(event.id)
+        }
+
+        // Vertical scrolling for recent events
+        recyclerViewRecentActivity.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewRecentActivity.adapter = eventsAdapterRecentActivity
+
+        // Load upcoming events and recent activity from Firestore
         loadUpcomingEvents()
+        loadRecentActivity()
 
         return binding.root
     }
@@ -100,6 +82,31 @@ class HomeFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e("HomeFragment", "Error getting upcoming events: ", exception)
+            }
+    }
+
+    private fun loadRecentActivity() {
+        db.collection("events")
+            .whereLessThanOrEqualTo("date", Timestamp.now()) // Fetch events that are before or on the current date
+            .orderBy("date", Query.Direction.DESCENDING) // Order by most recent
+            .limit(5) // Fetch only the latest 5 events
+            .get()
+            .addOnSuccessListener { documents ->
+                val recentEvents = documents.map { document ->
+                    val timestamp = document.getTimestamp("date") ?: Timestamp.now()
+                    val date = timestamp.toDate()
+                    Event(
+                        id = document.id,
+                        title = document.getString("title") ?: "Unknown Title",
+                        location = document.getString("place") ?: "Unknown Location",
+                        date = timestamp,
+                        time = document.getString("time") ?: "Unknown Time"
+                    )
+                }
+                eventsAdapterRecentActivity.updateEvents(recentEvents)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("HomeFragment", "Error getting recent events: ", exception)
             }
     }
 
