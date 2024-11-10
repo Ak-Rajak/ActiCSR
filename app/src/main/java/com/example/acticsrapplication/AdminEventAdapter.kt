@@ -3,19 +3,22 @@ package com.example.acticsrapplication
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.acticsrapplication.databinding.ItemEventBinding
+import com.example.acticsrapplication.databinding.ItemAdminEventBinding
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Locale
-// This Adapter file is used in fragment_event.xml for showing events, like Upcoming and Interested Events
 
-class EventAdapter(
+// This Adapter file is used in fragment_admin_event.xml for showing events, like Upcoming and Interested Events
+class AdminEventAdapter(
     private var events: MutableList<Event>,
-    private val itemClickListener: (Event) -> Unit // Passing the full Event object
-) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+    private val itemClickListener: (Event) -> Unit, // For handling click on event
+    private val updateListener: (Event) -> Unit, // For handling the update action
+    private val deleteListener: (Event) -> Unit // For handling the delete action
+) : RecyclerView.Adapter<AdminEventAdapter.EventViewHolder>() {
 
-    inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class EventViewHolder(private val binding: ItemAdminEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
+            // Binding data to views
             binding.eventTitle.text = event.title
             binding.eventLocation.text = event.location
 
@@ -25,14 +28,26 @@ class EventAdapter(
 
             binding.eventTime.text = event.time
 
+            // Handling item click to show event details
             itemView.setOnClickListener {
-                itemClickListener(event) // Pass the full event object to the click listener
+                itemClickListener(event)
+            }
+
+            // Handling update button click
+            binding.updateButton.setOnClickListener {
+                updateListener(event) // Trigger update action
+            }
+
+            // Handling delete button click
+            binding.deleteButton.setOnClickListener {
+                deleteListener(event) // Trigger delete action
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        // Inflate the correct layout using ItemAdminEventBinding
+        val binding = ItemAdminEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EventViewHolder(binding)
     }
 

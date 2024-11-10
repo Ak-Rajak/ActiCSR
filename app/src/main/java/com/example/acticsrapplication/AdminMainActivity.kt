@@ -49,7 +49,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(AddEventFragment())
                 }
                 R.id.admin_nav_view_event -> {
-                    loadFragment(EventsFragment())
+                    loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
                     loadFragment(ViewRegistrationsFragment())
@@ -67,7 +67,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(AddEventFragment())
                 }
                 R.id.admin_nav_view_event -> {
-                    loadFragment(EventsFragment())
+                    loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
                     loadFragment(ViewRegistrationsFragment())
@@ -88,7 +88,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         when (item.itemId) {
             R.id.admin_home -> loadFragment(AdminHomeFragment())
             R.id.admin_add_event -> loadFragment(AddEventFragment())
-            R.id.admin_view_event -> loadFragment(EventsFragment())
+            R.id.admin_view_event -> loadFragment(EventsAdminFragment())
             R.id.admin_event_register -> loadFragment(ViewRegistrationsFragment())
             R.id.admin_about_us -> loadFragment(AboutFragment())
             R.id.admin_logout -> showLogoutConfirmationDialog()

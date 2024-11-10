@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Inner LinearLayout to hold all form elements -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center_horizontal">
+
+        <!-- Event Title -->
+        <EditText
+            android:id="@+id/editTextEventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Event Title"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Event Coordinator Name -->
+        <EditText
+            android:id="@+id/editTextCoordinatorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Coordinator Name"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Event Place -->
+        <EditText
+            android:id="@+id/editTextEventPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Place"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Event Description -->
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:textSize="16sp"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Event Date -->
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Event Time -->
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Time"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/buttonSaveEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Event"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

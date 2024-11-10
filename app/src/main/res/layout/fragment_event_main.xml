@@ -1,46 +1,54 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="16dp"
     android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <!-- Event Title and Coordinator -->
+        <!-- Event Title -->
         <TextView
             android:id="@+id/eventTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="#333333"
             android:layout_marginTop="16dp" />
 
+        <!-- Coordinator Section -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
             <TextView
                 android:text="Co-ordinated by: "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:textColor="#607D8B"
-                android:layout_marginTop="4dp" />
+                android:textColor="#607D8B" />
             <TextView
                 android:id="@+id/eventCoordinatorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:textColor="#607D8B"
-                android:layout_marginTop="4dp" />
+                android:textColor="#607D8B" />
         </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#CCCCCC" />
+
         <!-- Date and Time Section -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,38 +58,26 @@
             android:layout_marginTop="8dp">
 
             <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_calendar"
                 app:tint="#5872FF"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginEnd="8dp" />
 
-            <!-- Date and Time Details -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_marginStart="8dp">
+                android:textSize="16sp"
+                android:textColor="#333333" />
 
-                <!-- Event Date -->
-                <TextView
-                    android:id="@+id/eventDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:layout_marginTop="4dp" />
-
-                <!-- Event Time -->
-                <TextView
-                    android:id="@+id/eventTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/eventTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:layout_marginStart="8dp" />
         </LinearLayout>
 
         <!-- Location Section -->
@@ -90,22 +86,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="12dp">
 
             <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_location"
-                app:tint="#5872FF"/>
+                app:tint="#5872FF"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/eventPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:textSize="16sp"
-                android:textColor="#000000" />
+                android:textColor="#333333" />
         </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#CCCCCC" />
 
         <!-- About Event Section -->
         <TextView
@@ -115,7 +118,7 @@
             android:text="About Event"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="#333333"
             android:layout_marginTop="16dp" />
 
         <TextView
@@ -129,9 +132,8 @@
         <!-- Register Button -->
         <Button
             android:id="@+id/registerButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
             android:text="REGISTER"
             android:textColor="#FFFFFF"
@@ -139,15 +141,17 @@
             android:drawableEnd="@drawable/baseline_navigate_next_24"
             android:padding="12dp"
             android:textAllCaps="true"
-            android:elevation="4dp" />
+            android:background="@drawable/rounded_button"
+            android:elevation="6dp" />
 
-        <!-- ProgressBar to show while loading -->
+        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone" /> <!-- Initially hidden -->
+            android:visibility="gone"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 </ScrollView>
