@@ -1,0 +1,157 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Event Title -->
+        <TextView
+            android:id="@+id/eventTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="16dp" />
+
+        <!-- Coordinator Section -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:text="Co-ordinated by: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#607D8B" />
+            <TextView
+                android:id="@+id/eventCoordinatorName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#607D8B" />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#CCCCCC" />
+
+        <!-- Date and Time Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="#5872FF"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/eventDate1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333" />
+
+            <TextView
+                android:id="@+id/eventTime1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Location Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_location"
+                app:tint="#5872FF"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/eventPlace1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#333333" />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#CCCCCC" />
+
+        <!-- About Event Section -->
+        <TextView
+            android:id="@+id/aboutEventTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About Event"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/eventDescription1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginTop="8dp" />
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/registerButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="VIEW REGISTER"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3F51B5"
+            android:drawableEnd="@drawable/baseline_navigate_next_24"
+            android:padding="12dp"
+            android:textAllCaps="true"
+            android:background="@drawable/rounded_button"
+            android:elevation="6dp" />
+
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>
