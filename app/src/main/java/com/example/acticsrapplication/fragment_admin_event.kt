@@ -18,10 +18,10 @@ class EventsAdminFragment : Fragment() {
 
     private var _binding: FragmentEventBinding? = null
     private val binding get() = _binding!!
-    private lateinit var eventAdapter: AdminEventAdapter // Change this to AdminEventAdapter
-    private val db = FirebaseFirestore.getInstance() // Initialize Firestore
-    private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) // Format for date
-    private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault()) // Format for time
+    private lateinit var eventAdapter: AdminEventAdapter // Adapter for displaying events
+    private val db = FirebaseFirestore.getInstance() // Firestore instance
+    private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,28 +43,15 @@ class EventsAdminFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // Initialize the adapter with a click listener to handle event selection, update, and delete handlers
         eventAdapter = AdminEventAdapter(mutableListOf(), { event ->
-            // Handle item click: navigate to event details page using FragmentTransaction
-            val eventDetailsFragment = EventDetailsFragment()
-
-            // Pass data to the EventDetailsFragment using a Bundle
-            val bundle = Bundle()
-            bundle.putString("eventId", event.id) // Pass the eventId or other details
-            eventDetailsFragment.arguments = bundle
-
-            // Use FragmentTransaction to replace or add the fragment
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, eventDetailsFragment) // Correct container ID here
-                .addToBackStack(null)  // Optional: To allow back navigation
-                .commit()
+            // Navigate to EventAdminDetailsFragment with the selected eventId
+            navigateToEventDetails(event.id)
         }, { event ->
-            // Handle update button click: navigate to an update screen
             navigateToUpdateEventScreen(event)
         }, { event ->
-            // Handle delete button click: delete the event from Firestore
             deleteEvent(event)
         })
+
         binding.recyclerViewEvents.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewEvents.adapter = eventAdapter
     }
@@ -84,87 +71,71 @@ class EventsAdminFragment : Fragment() {
                     1 -> loadEvents("upcoming")
                 }
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
     private fun loadEvents(status: String) {
-        // Get the current date as a Timestamp
         val currentDate = Timestamp.now()
 
         when (status) {
             "upcoming" -> {
                 db.collection("events")
-                    .whereGreaterThan("date", currentDate) // Compare directly with Timestamp
+                    .whereGreaterThan("date", currentDate)
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
                             val title = document.getString("title") ?: "Unknown Title"
                             val location = document.getString("place") ?: "Unknown Location"
-                            val dateTimestamp = document.getTimestamp("date") // Retrieve the date as Timestamp
+                            val dateTimestamp = document.getTimestamp("date")
                             val date = dateTimestamp?.toDate()?.let { dateFormat.format(it) } ?: "Unknown Date"
-
-                            // Retrieve the time from the timestamp
                             val time = dateTimestamp?.toDate()?.let { timeFormat.format(it) } ?: "Unknown Time"
 
-                            // Log the document data for debugging purposes
-                            Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
-
-                            // Create an Event object with the Timestamp value
                             Event(
                                 id = document.id,
                                 title = title,
                                 location = location,
-                                date = dateTimestamp ?: Timestamp.now(), // Pass the Timestamp directly
+                                date = dateTimestamp ?: Timestamp.now(),
                                 time = time
                             )
                         }
                         handleEventList(events)
                     }
                     .addOnFailureListener { exception ->
-                        Log.e("EventsFragment", "Error getting documents: ", exception)
+                        Log.e("EventsAdminFragment", "Error getting documents: ", exception)
                     }
             }
             "completed" -> {
                 db.collection("events")
-                    .whereLessThan("date", currentDate) // Compare directly with Timestamp
+                    .whereLessThan("date", currentDate)
                     .get()
                     .addOnSuccessListener { documents ->
                         val events = documents.map { document ->
                             val title = document.getString("title") ?: "Unknown Title"
                             val location = document.getString("place") ?: "Unknown Location"
-                            val dateTimestamp = document.getTimestamp("date") // Retrieve the date as Timestamp
+                            val dateTimestamp = document.getTimestamp("date")
                             val date = dateTimestamp?.toDate()?.let { dateFormat.format(it) } ?: "Unknown Date"
-
-                            // Retrieve the time from the timestamp
                             val time = dateTimestamp?.toDate()?.let { timeFormat.format(it) } ?: "Unknown Time"
 
-                            // Log the document data for debugging purposes
-                            Log.d("EventsFragment", "Event Data: Title = $title, Location = $location, Date = $date, Time = $time")
-
-                            // Create an Event object with the Timestamp value
                             Event(
                                 id = document.id,
                                 title = title,
                                 location = location,
-                                date = dateTimestamp ?: Timestamp.now(), // Pass the Timestamp directly
+                                date = dateTimestamp ?: Timestamp.now(),
                                 time = time
                             )
                         }
                         handleEventList(events)
                     }
                     .addOnFailureListener { exception ->
-                        Log.e("EventsFragment", "Error getting documents: ", exception)
+                        Log.e("EventsAdminFragment", "Error getting documents: ", exception)
                     }
             }
         }
     }
 
-    // Handle the event list and show/hide the "No events" message
     private fun handleEventList(events: List<Event>) {
-        // Ensure binding is not null before accessing it
         _binding?.let { safeBinding ->
             eventAdapter.updateEvents(events)
 
@@ -178,12 +149,26 @@ class EventsAdminFragment : Fragment() {
         }
     }
 
+    private fun navigateToEventDetails(eventId: String) {
+        val eventAdminDetailsFragment = EventAdminDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putString("eventId", eventId)
+            }
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, eventAdminDetailsFragment) // Make sure fragment_container matches your layout
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun navigateToUpdateEventScreen(event: Event) {
-        // Implement logic to navigate to an update screen where the admin can edit the event details
-        val updateEventFragment = UpdateEventFragment()
-        val bundle = Bundle()
-        bundle.putString("eventId", event.id)
-        updateEventFragment.arguments = bundle
+        val updateEventFragment = UpdateEventFragment().apply {
+            arguments = Bundle().apply {
+                putString("eventId", event.id)
+            }
+        }
+
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, updateEventFragment)
             .addToBackStack(null)
@@ -191,13 +176,11 @@ class EventsAdminFragment : Fragment() {
     }
 
     private fun deleteEvent(event: Event) {
-        // Delete the event from Firestore
         db.collection("events").document(event.id)
             .delete()
             .addOnSuccessListener {
                 Log.d("EventsAdminFragment", "Event deleted successfully")
-                // Refresh the events list after deletion
-                loadEvents("completed") // Or "upcoming", depending on your logic
+                loadEvents("completed")
             }
             .addOnFailureListener { e ->
                 Log.e("EventsAdminFragment", "Error deleting event", e)
@@ -206,6 +189,6 @@ class EventsAdminFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Nullify the binding to avoid memory leaks
+        _binding = null
     }
 }
