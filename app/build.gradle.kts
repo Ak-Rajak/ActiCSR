@@ -57,6 +57,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation("com.google.firebase:firebase-messaging:23.1.0")
+
 
     // Additional libraries
     implementation("com.airbnb.android:lottie:6.5.2")
