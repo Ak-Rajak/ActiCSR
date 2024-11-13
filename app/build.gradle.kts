@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.storage.ktx)
     implementation("com.google.firebase:firebase-messaging:23.1.0")
+    implementation ("com.google.firebase:firebase-firestore:24.2.1")
+    implementation("implementation 'com.google.firebase:firebase-auth:21.0.8")
 
 
     // Additional libraries
@@ -65,6 +67,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
