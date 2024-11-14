@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -55,7 +56,7 @@ class EventAdminDetailsFragment : Fragment() {
 
         // Set up onClick listener for the register button if needed
         registerButton.setOnClickListener {
-            // Code to handle registration (if implemented)
+            openRegistrationListFragment()
         }
         return view
     }
@@ -106,5 +107,14 @@ class EventAdminDetailsFragment : Fragment() {
                 progressBar.visibility = View.GONE
                 Log.e("EventAdminDetails", "Error fetching event details: ", exception)
             }
+    }
+
+    private fun openRegistrationListFragment() {
+        val registrationListFragment = RegistrationListFragment()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, registrationListFragment)
+            .addToBackStack(null) // Allows user to return to EventAdminDetailsFragment
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN) // Adds smooth transition
+            .commit()
     }
 }

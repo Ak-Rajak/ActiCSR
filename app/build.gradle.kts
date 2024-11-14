@@ -58,8 +58,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.storage.ktx)
     implementation("com.google.firebase:firebase-messaging:23.1.0")
-    implementation ("com.google.firebase:firebase-firestore:24.2.1")
-    implementation("implementation 'com.google.firebase:firebase-auth:21.0.8")
+
 
 
     // Additional libraries
