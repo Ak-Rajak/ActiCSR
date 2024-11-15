@@ -52,7 +52,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
-                    loadFragment(ViewRegistrationsFragment())
+                    loadFragment(AdminHomeFragment())
                 }
             }
             true // Return true to indicate item selection was handled
@@ -70,7 +70,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
-                    loadFragment(ViewRegistrationsFragment())
+                    loadFragment(AdminHomeFragment())
                 }
             }
         }
@@ -89,7 +89,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             R.id.admin_home -> loadFragment(AdminHomeFragment())
             R.id.admin_add_event -> loadFragment(AddEventFragment())
             R.id.admin_view_event -> loadFragment(EventsAdminFragment())
-            R.id.admin_event_register -> loadFragment(ViewRegistrationsFragment())
+            R.id.admin_event_register -> loadFragment(AdminHomeFragment())
             R.id.admin_about_us -> loadFragment(AboutFragment())
             R.id.admin_logout -> showLogoutConfirmationDialog()
         }
