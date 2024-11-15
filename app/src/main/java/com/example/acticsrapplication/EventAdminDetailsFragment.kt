@@ -110,11 +110,15 @@ class EventAdminDetailsFragment : Fragment() {
     }
 
     private fun openRegistrationListFragment() {
-        val registrationListFragment = RegistrationListFragment()
+        val registrationListFragment = RegistrationListFragment().apply {
+            arguments = Bundle().apply {
+                putString("eventId", eventId)
+            }
+        }
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, registrationListFragment)
-            .addToBackStack(null) // Allows user to return to EventAdminDetailsFragment
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN) // Adds smooth transition
+            .addToBackStack(null)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 }
