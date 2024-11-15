@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -127,8 +126,9 @@ class EventDetailsFragment : Fragment() {
         eventId?.let { id ->
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
             val registrationData = mutableMapOf<String, Any>(
-                "userId" to (currentUserId ?: ""),
-                "timestamp" to Timestamp.now()
+                "eventId" to id, // Store eventId directly in the registration data
+                "userId" to (currentUserId ?: ""), // Store userId
+                "timestamp" to Timestamp.now() // Store the current timestamp
             )
 
             // Parse date and time to Firestore Date
@@ -146,12 +146,10 @@ class EventDetailsFragment : Fragment() {
                 Log.e("EventDetailsFragment", "Error parsing date and time", e)
             }
 
-            // Save registration data
+            // Save registration data in the "registrations" collection
             if (currentUserId != null) {
-                db.collection("events").document(id)
-                    .collection("registrations")
-                    .document(currentUserId)
-                    .set(registrationData, SetOptions.merge())
+                db.collection("registrations")
+                    .add(registrationData) // Add a new document in the "registrations" collection
                     .addOnSuccessListener {
                         Log.d("EventDetailsFragment", "Registration successful!")
                         showSuccessMessage("Registered successfully!")
