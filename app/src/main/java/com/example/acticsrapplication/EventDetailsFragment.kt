@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -125,10 +126,9 @@ class EventDetailsFragment : Fragment() {
     private fun registerForEvent() {
         eventId?.let { id ->
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-            val registrationData = mutableMapOf<String, Any>(
-                "eventId" to id, // Store eventId directly in the registration data
-                "userId" to (currentUserId ?: ""), // Store userId
-                "timestamp" to Timestamp.now() // Store the current timestamp
+            val registrationData = mapOf(
+                "userId" to (currentUserId ?: ""),
+                "timestamp" to Timestamp.now()
             )
 
             // Parse date and time to Firestore Date
@@ -140,23 +140,42 @@ class EventDetailsFragment : Fragment() {
                 val eventDateTime = dateFormat.parse(dateTimeStr)
 
                 if (eventDateTime != null) {
-                    registrationData["eventDate"] = Timestamp(eventDateTime)
+                    registrationData.plus("eventDate" to Timestamp(eventDateTime))
                 }
             } catch (e: Exception) {
                 Log.e("EventDetailsFragment", "Error parsing date and time", e)
             }
 
-            // Save registration data in the "registrations" collection
+            // Add or update registration in Firestore
             if (currentUserId != null) {
-                db.collection("registrations")
-                    .add(registrationData) // Add a new document in the "registrations" collection
-                    .addOnSuccessListener {
-                        Log.d("EventDetailsFragment", "Registration successful!")
-                        showSuccessMessage("Registered successfully!")
+                val eventRef = db.collection("event_registrations").document(id)
+
+                eventRef.get().addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        // Document exists, update the registrations array
+                        eventRef.update("registrations", FieldValue.arrayUnion(registrationData))
+                            .addOnSuccessListener {
+                                Log.d("EventDetailsFragment", "Registration updated successfully!")
+                                showSuccessMessage("Registered successfully!")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("EventDetailsFragment", "Error registering for event", e)
+                            }
+                    } else {
+                        // Document doesn't exist, create it with the registration array
+                        val newEventData = mapOf(
+                            "registrations" to listOf(registrationData)
+                        )
+                        eventRef.set(newEventData)
+                            .addOnSuccessListener {
+                                Log.d("EventDetailsFragment", "Registration created successfully!")
+                                showSuccessMessage("Registered successfully!")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("EventDetailsFragment", "Error registering for event", e)
+                            }
                     }
-                    .addOnFailureListener { e ->
-                        Log.e("EventDetailsFragment", "Error registering for event", e)
-                    }
+                }
             }
         } ?: Log.e("EventDetailsFragment", "Event ID is null or empty")
     }
