@@ -1,59 +1,42 @@
-package com.example.acticsrapplication
+package com.example.eventmanager
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.acticsrapplication.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AboutFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
-    }
+        val rootView = inflater.inflate(R.layout.fragment_about, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_about.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AboutFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        // Initialize the views from the XML layout
+        val aboutUsTitle: TextView = rootView.findViewById(R.id.aboutUsTitle)
+        val appDescription: TextView = rootView.findViewById(R.id.appDescription)
+        val teamTitle: TextView = rootView.findViewById(R.id.teamTitle)
+        val teamMembers: TextView = rootView.findViewById(R.id.teamMembers)
+        val contactTitle: TextView = rootView.findViewById(R.id.contactTitle)
+        val contactInfo: TextView = rootView.findViewById(R.id.contactInfo)
+        val socialMediaTitle: TextView = rootView.findViewById(R.id.socialMediaTitle)
+        val socialLinks: TextView = rootView.findViewById(R.id.socialLinks)
+
+        // Set text content dynamically if needed (optional)
+        aboutUsTitle.text = "About Us"
+        appDescription.text = "Welcome to our Event Manager and Activity Tracker App! This app helps you organize events and track activities efficiently. Whether you're planning a conference, workshop, or any activity, this app simplifies event management and keeps you on track."
+        teamTitle.text = "Our Development Team"
+        teamMembers.text = "Sayan - Lead Developer\nJohn Doe - UI/UX Designer\nJane Smith - Backend Developer"
+        contactTitle.text = "Contact Us"
+        contactInfo.text = "Email: support@eventtrackerapp.com\nPhone: +123 456 7890"
+        socialMediaTitle.text = "Follow Us"
+        socialLinks.text = "Facebook: /eventtracker\nTwitter: @eventtracker\nInstagram: @event_tracker"
+
+        return rootView
     }
 }

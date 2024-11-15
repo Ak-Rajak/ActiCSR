@@ -1,101 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".AboutFragment">
+    android:background="@color/old_lace"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:padding="16dp">
 
-        <!-- Logo at the top -->
+        <!-- App Logo or Header -->
+
+        <!-- Title of the Page -->
         <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/acticsr"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="Logo" />
+            android:id="@+id/appLogo"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:contentDescription="App Logo"
+            android:src="@drawable/acticsr" />
 
-        <!-- Main heading -->
         <TextView
-            android:id="@+id/mainHeading"
+            android:id="@+id/aboutUsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to actiCSR!"
+            android:text="About Us"
             android:textSize="24sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Mission Statement -->
-        <TextView
-            android:id="@+id/missionStatement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Our mission is to foster a collaborative environment where every student can actively contribute to CSR events."
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:gravity="center"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Key Features Heading -->
-        <TextView
-            android:id="@+id/keyFeaturesHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Key Features of actiCSR:"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Key Features List -->
-        <TextView
-            android:id="@+id/keyFeaturesDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="- Event Management: Organize all college events with ease.\n- Participant Tracking: Keep detailed records of every student’s contributions.\n- Activity Records: View past event history and performance insights.\n- Real-time Notifications: Stay updated with event schedules and reminders.\n- Collaboration Tools: Ensure smooth communication and coordination between organizers."
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Call to Action -->
-        <TextView
-            android:id="@+id/getInvolvedHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Get Involved with actiCSR!"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:id="@+id/getInvolvedDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ready to take part in college events and make a difference? Join actiCSR today and stay connected with every CSR initiative on campus!"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
-
-        <!-- Publish Button -->
-        <Button
-            android:id="@+id/publishEventButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Join actiCSR Now!"
-            android:textAllCaps="false"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/black"
-            android:textColor="@android:color/white"
+            android:textColor="@color/dark_violet"
             android:layout_marginTop="16dp" />
 
+        <!-- App Description -->
+        <TextView
+            android:id="@+id/appDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to our Event Manager and Activity Tracker App! This app helps you organize events and track activities efficiently. Whether you're planning a conference, workshop, or any activity, this app simplifies event management and keeps you on track."
+            android:textSize="16sp"
+            android:textColor="@color/dark_grey"
+            android:layout_marginTop="24dp"/>
+
+        <!-- Team Section Title -->
+        <TextView
+            android:id="@+id/teamTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Our Development Team"
+            android:textSize="20sp"
+            android:textColor="@color/dark_violet"
+            android:layout_marginTop="32dp" />
+
+        <!-- Team Members List -->
+        <TextView
+            android:id="@+id/teamMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sayan - Lead Developer\nJohn Doe - UI/UX Designer\nJane Smith - Backend Developer"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Contact Section Title -->
+        <TextView
+            android:id="@+id/contactTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Us"
+            android:textSize="20sp"
+            android:textColor="@color/deep_pink"
+            android:layout_marginTop="32dp" />
+
+        <!-- Contact Information -->
+        <TextView
+            android:id="@+id/contactInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: support@eventtrackerapp.com\nPhone: +123 456 7890"
+            android:textSize="16sp"
+            android:textColor="@color/dim_gray"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Social Media Links Section -->
+        <TextView
+            android:id="@+id/socialMediaTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Follow Us"
+            android:textSize="20sp"
+            android:textColor="@color/deep_pink"
+            android:layout_marginTop="32dp" />
+
+        <!-- Social Media Links -->
+        <TextView
+            android:id="@+id/socialLinks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook: /eventtracker\nTwitter: @eventtracker\nInstagram: @event_tracker"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            android:layout_marginTop="8dp"/>
+
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
