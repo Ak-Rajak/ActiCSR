@@ -126,21 +126,31 @@ class EventDetailsFragment : Fragment() {
     private fun registerForEvent() {
         eventId?.let { id ->
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-            val registrationData = mapOf(
+            val currentUserEmail = FirebaseAuth.getInstance().currentUser?.email
+            val currentUserName = FirebaseAuth.getInstance().currentUser?.displayName
+            val registrationData = mutableMapOf(
                 "userId" to (currentUserId ?: ""),
-                "timestamp" to Timestamp.now()
+                "username" to (currentUserName ?: "Unknown"),
+                "email" to (currentUserEmail ?: "Unknown"),
+                "timestamp" to Timestamp.now() // Store current time
             )
 
-            // Parse date and time to Firestore Date
+            // Parse date and time to Firestore Timestamp
             try {
-                val dateStr = eventDate.text.toString().trim()
-                val timeStr = eventTime.text.toString().trim()
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                val dateStr = eventDate.text.toString().trim() // Get event date string
+                val timeStr = eventTime.text.toString().trim() // Get event time string
+
+                // Combine the date and time strings
                 val dateTimeStr = "$dateStr $timeStr"
-                val eventDateTime = dateFormat.parse(dateTimeStr)
+
+                // Use the correct format for the date string. Make sure the format matches the input string.
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault()) // Adjust pattern if necessary
+                val eventDateTime = dateFormat.parse(dateTimeStr) // Parse combined string into Date
 
                 if (eventDateTime != null) {
-                    registrationData.plus("eventDate" to Timestamp(eventDateTime))
+                    registrationData["eventDate"] = Timestamp(eventDateTime) // Store as Firestore Timestamp
+                } else {
+                    Log.e("EventDetailsFragment", "Failed to parse event date-time string: $dateTimeStr")
                 }
             } catch (e: Exception) {
                 Log.e("EventDetailsFragment", "Error parsing date and time", e)
