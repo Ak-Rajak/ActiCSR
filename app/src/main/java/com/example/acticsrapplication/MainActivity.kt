@@ -3,7 +3,9 @@ package com.example.acticsrapplication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -156,15 +158,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showLogoutConfirmationDialog() {
-        // Create an AlertDialog to confirm logout
-        AlertDialog.Builder(this).apply {
-            setTitle("Logout")
-            setMessage("Are you sure you want to logout?")
-            setPositiveButton("Yes") { _, _ -> logout() }
-            setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-            create().show()
+        // Inflate the custom layout
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.logout_alert_dialer, null)
+
+        // Find the buttons and set up their actions
+        val btnYes: Button = dialogView.findViewById(R.id.btn_yes)
+        val btnNo: Button = dialogView.findViewById(R.id.btn_no)
+
+        // Create the AlertDialog with the custom view
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        // Set button actions
+        btnYes.setOnClickListener {
+            // Handle logout action
+            logout()
+            dialog.dismiss()  // Close the dialog
         }
+
+        btnNo.setOnClickListener {
+            // Dismiss the dialog
+            dialog.dismiss()
+        }
+
+        // Show the dialog
+        dialog.show()
     }
+
 
     private fun logout() {
         // Sign out from Firebase
