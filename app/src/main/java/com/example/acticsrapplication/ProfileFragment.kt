@@ -59,27 +59,38 @@ class ProfileFragment : Fragment() {
 
     private fun loadUserData() {
         val user = firebaseAuth.currentUser
-        user?.let {
-            val userId = it.uid
+        if (user != null) {
+            val userId = user.uid
+            Log.d("ProfileFragment", "Fetching data for user: $userId")
             db.collection("users").document(userId).get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
+                        Log.d("ProfileFragment", "Document data: ${document.data}")
                         displayUserData(document)
+                    } else {
+                        Log.w("ProfileFragment", "No such document")
                     }
                 }
                 .addOnFailureListener { e ->
-                    Log.w("Firestore", "Error fetching user data", e)
+                    Log.e("ProfileFragment", "Error fetching document", e)
                 }
+        } else {
+            Log.e("ProfileFragment", "User not authenticated")
         }
     }
 
+
     private fun displayUserData(document: DocumentSnapshot) {
-        // Retrieve and display user data from Firestore document
         userName.text = document.getString("username") ?: "No Name"
+        Log.d("ProfileFragment", "Set userName: ${userName.text}")
+
         branchName.text = document.getString("branchName") ?: "No Branch"
+        Log.d("ProfileFragment", "Set branchName: ${branchName.text}")
+
         userMobile.text = document.getString("mobile") ?: "No Mobile"
         registrationNo.text = document.getString("registrationNo") ?: "No Registration No"
         yearOfStudy.text = document.getString("yearOfStudy") ?: "No Year"
         userEmail.text = document.getString("email") ?: "No Email"
     }
+
 }
