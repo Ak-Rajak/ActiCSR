@@ -1,26 +1,269 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewWelcome"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to Admin Home"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:padding="8dp" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonAction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Perform Action"
-        android:padding="8dp"/>
+        <!-- Admin Title -->
+        <TextView
+            android:id="@+id/admin_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Dashboard"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="20dp" />
 
-</LinearLayout>
+        <!-- Dashboard Overview Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <!-- Activity Overview -->
+            <TextView
+                android:id="@+id/activities_overview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activities Overview"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/activities_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Activities: 0"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Pending Activities -->
+            <TextView
+                android:id="@+id/pending_activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Activities: 0"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Buttons for Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/add_event_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Event"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/blue"
+                android:layout_marginEnd="16dp" />
+
+            <Button
+                android:id="@+id/view_events_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Events"
+                android:textColor="@color/dark_slate_gray"
+                android:backgroundTint="@color/cornsilk" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+
+        <!-- Recent Activities -->
+        <TextView
+            android:id="@+id/recent_activities_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recent Activities"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/recent_activities_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No recent activities."
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+
+
+        <!-- Notifications -->
+        <TextView
+            android:id="@+id/notifications_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notifications"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/notifications_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No new notifications."
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+            <!-- Statistics -->
+            <TextView
+                android:id="@+id/statistics_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistics"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp" />
+        <TextView
+                android:id="@+id/total_users_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Users: 100"
+                android:textSize="16sp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/completed_activities_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed Activities: 20"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+
+            <!-- Quick Links -->
+            <TextView
+                android:id="@+id/quick_links_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Links"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp" />
+            <TextView
+                android:id="@+id/link_user_management"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Management"
+                android:textSize="16sp"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/link_system_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="System Settings"
+                android:textSize="16sp"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+
+        <!-- Upcoming Events -->
+        <TextView
+            android:id="@+id/upcoming_events_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upcoming Events"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/upcoming_events_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No upcoming events."
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/rounded_corner_background">
+
+        <!-- System Status -->
+        <TextView
+            android:id="@+id/system_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="System Status"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/system_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All systems operational."
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

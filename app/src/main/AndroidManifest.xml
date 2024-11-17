@@ -50,6 +50,10 @@
             android:theme="@style/Theme.NavigationDrawer"
             android:exported="true" />
 
+        <activity android:name=".AddEventFragment">
+            <!-- Optionally, you can add an intent filter if required -->
+        </activity>
+
         <!-- Firebase Messaging Service -->
         <service
             android:name=".MyFirebaseMessagingService"
