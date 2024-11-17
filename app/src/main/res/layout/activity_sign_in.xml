@@ -9,24 +9,6 @@
     android:orientation="vertical"
     tools:context=".SignIn">
 
-    <!-- Toolbar with Back Icon -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="-25dp"
-        android:layout_marginLeft="-15dp"
-        tools:ignore="RtlHardcoded">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_24"
-            app:tint="@color/dark_blue" />
-    </com.google.android.material.appbar.MaterialToolbar>
-
-
 
     <!-- Logo -->
     <LinearLayout
