@@ -28,15 +28,6 @@ class AboutFragment : Fragment() {
         val socialLinks: TextView = rootView.findViewById(R.id.socialLinks)
 
         // Set text content dynamically if needed (optional)
-        aboutUsTitle.text = "About Us"
-        appDescription.text = "Welcome to our Event Manager and Activity Tracker App! This app helps you organize events and track activities efficiently. Whether you're planning a conference, workshop, or any activity, this app simplifies event management and keeps you on track."
-        teamTitle.text = "Our Development Team"
-        teamMembers.text = "Sayan - Lead Developer\nJohn Doe - UI/UX Designer\nJane Smith - Backend Developer"
-        contactTitle.text = "Contact Us"
-        contactInfo.text = "Email: support@eventtrackerapp.com\nPhone: +123 456 7890"
-        socialMediaTitle.text = "Follow Us"
-        socialLinks.text = "Facebook: /eventtracker\nTwitter: @eventtracker\nInstagram: @event_tracker"
-
         return rootView
     }
 }
