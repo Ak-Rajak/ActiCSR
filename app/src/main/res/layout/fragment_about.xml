@@ -57,7 +57,7 @@
             android:id="@+id/teamMembers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sayan - Lead Developer\nJohn Doe - UI/UX Designer\nJane Smith - Backend Developer"
+            android:text="Sayan Ash\nRoshan Patel\nSamahita Khillar\nAtul Kumar Rajak\nSmrutiSikha Mahapatra"
             android:textSize="16sp"
             android:textColor="@color/grey"
             android:layout_marginTop="8dp"/>
