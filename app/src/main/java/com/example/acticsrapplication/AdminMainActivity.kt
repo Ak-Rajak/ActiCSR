@@ -55,7 +55,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
-                    loadFragment(AdminHomeFragment())
+                    loadFragment(AboutFragment())
                 }
             }
             true // Return true to indicate item selection was handled
@@ -73,7 +73,7 @@ class AdminMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     loadFragment(EventsAdminFragment())
                 }
                 R.id.admin_nav_view_reg -> {
-                    loadFragment(AdminHomeFragment())
+                    loadFragment(AboutFragment())
                 }
             }
         }

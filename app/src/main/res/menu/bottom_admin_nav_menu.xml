@@ -18,5 +18,5 @@
     <item
         android:id="@+id/admin_nav_view_reg"
         android:icon="@drawable/admin_nav_register"
-        android:title="ViewRegistration"/>
+        android:title="About Us"/>
 </menu>
