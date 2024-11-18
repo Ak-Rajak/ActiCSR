@@ -111,7 +111,7 @@
                 android:paddingEnd="16dp" />
         </LinearLayout>
 
-        <!-- Recent Activity Section -->
+        <!-- Completed Activity Section -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Registrations"
+                android:text="Completed Events"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
